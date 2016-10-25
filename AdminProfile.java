@@ -1,3 +1,8 @@
+import javax.swing.JList;
+import javax.swing.*;
+import java.awt.event.*;
+import java.awt.*;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,7 +16,7 @@
 public class AdminProfile extends javax.swing.JFrame {
 
 	private String name;
-	private String event;
+	private static String event;
     public AdminProfile(String fromLogin) {
     	name = fromLogin;
         initComponents();
@@ -98,6 +103,13 @@ public class AdminProfile extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        
+        jList1.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jList1ValueChanged(evt);
+            }
+        });
+        
         adminEventList.setViewportView(jList1);
 
         adminEventEdit.setText("Edit");
@@ -156,6 +168,12 @@ public class AdminProfile extends javax.swing.JFrame {
                 adminStatEventMenuActionPerformed(evt);
             }
         });
+
+        adminEventStart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminEventStartActionPerformed(evt);
+            }
+        });        
 
         adminStatEvent.setText("Event Type");
 
@@ -268,9 +286,18 @@ public class AdminProfile extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_adminStatGenerateActionPerformed
 
+    private void adminEventStartActionPerformed(java.awt.event.ActionEvent evt) {
+    	event = jList1.getSelectedValue();
+    	setVisible(false);
+    	new CheckinScreen().setVisible(true);
+    }
     
-    private String getEvent(){
-    	event = "fundraising10241992";
+    private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {                                    
+
+    }
+    
+
+    public static String getEvent(){
     	return event;
     }
     /**

@@ -204,8 +204,8 @@ public class CheckinScreen extends javax.swing.JFrame {
         String name = firstField.getText() + " " + lastField.getText();
         if(valid.readName(name)){
             jDialog1.setVisible(true);
-            //String event = AdminProfile.getEvent();
-            valid.writeEvent(name, "fundra121993"); //writes event to persons name for checkin. the admin could run loop after event is done and search for the event occurance in all users to see how many attended event.
+            event = AdminProfile.getEvent();
+            valid.writeEvent(name, event); //writes event to persons name for checkin. the admin could run loop after event is done and search for the event occurance in all users to see how many attended event.
             
         }
         else{
@@ -264,7 +264,7 @@ public class CheckinScreen extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private String event;
     private javax.swing.JLabel checkIn;
     private javax.swing.JLabel dialogEnjoy;
     private javax.swing.JButton dialogSignin;
