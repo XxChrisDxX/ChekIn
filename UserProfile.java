@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -43,6 +45,8 @@ public class UserProfile extends javax.swing.JFrame {
                 userUpdateActionPerformed(evt);
             }
         });
+        
+        
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -76,7 +80,16 @@ public class UserProfile extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void userUpdateActionPerformed(java.awt.event.ActionEvent evt) {
-    
+    	String email = userEmailField.getText();
+    	try{
+    		Database update = new Database();
+    		update.writeEmail(name,email);
+    		setVisible(false);
+    		new CheckinScreen().setVisible(true);
+    	}
+    	catch(IOException e){
+    		
+    	}
     	
     }
     

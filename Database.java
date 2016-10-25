@@ -17,7 +17,7 @@ public class Database {
 			for(int i = 0; i<length;i++){
 				if(line.charAt(i)==':'){
 					name = line.substring(0,i);
-					if(data.equals(name)){
+					if(data.equalsIgnoreCase(name)){
 						file.close();
 						input.close();
 						return true;
@@ -43,7 +43,7 @@ public class Database {
 			for(int i = 0; i<length;i++){
 				if(line.charAt(i)==':'){
 					name = line.substring(0,i);
-					if(data.equals(name)){
+					if(data.equalsIgnoreCase(name)){
 						int permissionIndex = line.indexOf('%');
 						if(line.charAt(permissionIndex+1)=='1'){
 							file.close();
@@ -78,7 +78,7 @@ public class Database {
 			for(int i = 0; i<length;i++){
 				if(line.charAt(i)==':'){
 					name = line.substring(0,i);
-					if(data.equals(name)){
+					if(data.equalsIgnoreCase(name)){
 						emailIndex = line.indexOf(':', i+1);
 						Email = line.substring(i+1, emailIndex);
 						file.close();
@@ -105,35 +105,58 @@ public class Database {
 	
 	public void writeEvent(String data, String event) throws IOException{
 		StringBuilder add = new StringBuilder(150);
-		PrintWriter out = new PrintWriter(new FileWriter("database.dat", true));
-		FileReader file = new FileReader("database.dat");
-		BufferedReader input = new BufferedReader(file);
+		File main = new File("database.dat");
+		File temp = new File("temp.dat");
+		BufferedReader input = new BufferedReader(new FileReader(main));
+		BufferedWriter out = new BufferedWriter(new FileWriter(temp, true));
 		String name = "";
+		
 		while((line = input.readLine()) != null){
-			int length = line.length();
-
-			for(int i = 0; i<length;i++){
-				if(line.charAt(i)==':'){
-					name = line.substring(0,i);
-					if(data.equals(name)){
+			int length = line.indexOf(':');
+					name = line.substring(0,length);
+					if(name.equalsIgnoreCase(data)){
 						line.indexOf(']');
-						add.append(line.substring(0,line.indexOf(']')-1));
+						add.append(line.substring(0,line.indexOf(']')));
 						add.append(",");
 						add.append(event);
-						add.append("]");
-						out.println(add.toString());
+						add.append("]\n");
+						out.write(add.toString());
 					}
 					else
-						break;
-				}
-			}
-				
+						out.write(line+"\n");	
+			
 		}
-		file.close();
 		input.close();
 		out.close();
+		boolean successful = temp.renameTo(main);
 	}
 
+	public void writeEmail(String data, String email) throws IOException{
+		StringBuilder add = new StringBuilder(150);
+		File main = new File("database.dat");
+		File temp = new File("temp.dat");
+		BufferedReader input = new BufferedReader(new FileReader(main));
+		BufferedWriter out = new BufferedWriter(new FileWriter(temp, true));
+		String name = "";
+		
+		while((line = input.readLine()) != null){
+			int length = line.indexOf(':');
+					name = line.substring(0,length);
+					if(name.equalsIgnoreCase(data)){
+						add.append(line.substring(0,length));
+						add.append(":");
+						add.append(email);
+						add.append(line.substring(line.indexOf(':', length+1), line.length() ));
+						out.write(add.toString());
+					}
+					else
+						out.write(line+"\n");	
+			
+		}
+		input.close();
+		out.close();
+		boolean successful = temp.renameTo(main);
+	}
 
 	public static void main(String args[]) throws IOException{
 		new Database();

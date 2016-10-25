@@ -187,7 +187,7 @@ public class CheckinScreen extends javax.swing.JFrame {
         	setVisible(false);
         }
         else
-            new CreateProfile().setVisible(true);
+            new CreateProfile(name).setVisible(true);
             setVisible(false);
         	
         }
@@ -205,11 +205,11 @@ public class CheckinScreen extends javax.swing.JFrame {
         if(valid.readName(name)){
             jDialog1.setVisible(true);
             //String event = AdminProfile.getEvent();
-            valid.writeEvent(name, "fundraising03121993"); //writes event to persons name for checkin. the admin could run loop after event is done and search for the event occurance in all users to see how many attended event.
+            valid.writeEvent(name, "fundra121993"); //writes event to persons name for checkin. the admin could run loop after event is done and search for the event occurance in all users to see how many attended event.
             
         }
         else{
-            new CreateProfile().setVisible(true);
+            new CreateProfile(name).setVisible(true);
             setVisible(false);
         }
         }

@@ -12,11 +12,13 @@ import java.io.IOException;
  */
 public class CreateProfile extends javax.swing.JFrame {
 
-    /**
-     * Creates new form CreateProfile
-     */
-    public CreateProfile() {
+	private String name;
+	
+    public CreateProfile(String fromCheckin) {
+    	name = fromCheckin;
         initComponents();
+        createFirstField.setText(name.substring(0, name.indexOf(' ')));
+        createLastField.setText(name.substring(name.indexOf(' ')+1, name.length()));
     }
 
     /**
@@ -130,7 +132,7 @@ public class CreateProfile extends javax.swing.JFrame {
         {}
         else
         	create.writeUser(createFirstField.getText() + " " + createLastField.getText()
-        					+":"+createEmailField.getText()+":"+createBirthField.getText()+"%0");
+        					+":"+createEmailField.getText()+":"+createBirthField.getText()+"%0"+"[]");
         	new CheckinScreen().setVisible(true);
         	setVisible(false);	
         }
@@ -170,7 +172,7 @@ public class CreateProfile extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CreateProfile().setVisible(true);
+                new CreateProfile("").setVisible(true);
             }
         });
     }
