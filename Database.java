@@ -1,4 +1,7 @@
+import java.awt.List;
+import java.util.*;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Database {
@@ -31,6 +34,23 @@ public class Database {
 		file.close();
 		input.close();
 		return false;
+	}
+	
+	public ArrayList<String> findUser(String data) throws IOException{
+		FileReader file = new FileReader("database.dat");
+		BufferedReader input = new BufferedReader(file);
+		String name = "";
+		ArrayList<String> users = new ArrayList<String>();
+		while((line = input.readLine()) != null){
+			int length = line.indexOf(':');
+			name = line.substring(0,length);
+			if(name.toLowerCase().contains(data.toLowerCase())){
+				users.add(name);
+			}
+		}
+		file.close();
+		input.close();
+		return users;
 	}
 
 	public boolean readPermissions(String data) throws IOException{
@@ -147,6 +167,34 @@ public class Database {
 						add.append(":");
 						add.append(email);
 						add.append(line.substring(line.indexOf(':', length+1), line.length() ));
+						out.write(add.toString());
+					}
+					else
+						out.write(line+"\n");	
+			
+		}
+		input.close();
+		out.close();
+		boolean successful = temp.renameTo(main);
+	}
+	
+	public void writePermissions(String data, int Permission) throws IOException{
+		StringBuilder add = new StringBuilder(150);
+		File main = new File("database.dat");
+		File temp = new File("temp.dat");
+		BufferedReader input = new BufferedReader(new FileReader(main));
+		BufferedWriter out = new BufferedWriter(new FileWriter(temp, true));
+		String name = "";
+		
+		while((line = input.readLine()) != null){
+			int length = line.indexOf(':');
+					name = line.substring(0,length);
+					if(name.equalsIgnoreCase(data)){
+						int permissionIndex = line.indexOf('%');
+						add.append(line.substring(0,permissionIndex+1));
+						add.append(Permission);
+						add.append(line.substring(permissionIndex+2, line.length() ));
+						add.append("\n");
 						out.write(add.toString());
 					}
 					else
