@@ -175,6 +175,12 @@ public class AdminProfile extends javax.swing.JFrame {
             }
         });        
 
+        adminEventEnd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminEventEndActionPerformed(evt);
+            }
+        });  
+        
         adminStatEvent.setText("Event Type");
 
         adminStatAgeMenu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Age", "Attendance", "Day", "Frequency" }));
@@ -288,6 +294,12 @@ public class AdminProfile extends javax.swing.JFrame {
 
     private void adminEventStartActionPerformed(java.awt.event.ActionEvent evt) {
     	event = jList1.getSelectedValue();
+    	setVisible(false);
+    	new CheckinScreen().setVisible(true);
+    }
+
+    private void adminEventEndActionPerformed(java.awt.event.ActionEvent evt) {
+    	event = "";
     	setVisible(false);
     	new CheckinScreen().setVisible(true);
     }
