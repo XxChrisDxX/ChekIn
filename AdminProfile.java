@@ -1,6 +1,6 @@
-import javax.swing.JList;
 import javax.swing.*;
 import java.awt.event.*;
+import java.io.IOException;
 import java.awt.*;
 
 /*
@@ -16,9 +16,8 @@ import java.awt.*;
 public class AdminProfile extends javax.swing.JFrame {
 
 	private String name;
-	private static String event;
-    public AdminProfile(String fromLogin) {
-    	name = fromLogin;
+	private static String event="";
+    public AdminProfile() {
         initComponents();
     }
 
@@ -37,7 +36,9 @@ public class AdminProfile extends javax.swing.JFrame {
         adminUserSearch = new javax.swing.JLabel();
         adminUserSearchField = new javax.swing.JTextField();
         adminUserNameList = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jList2 = new javax.swing.JList<>();
+        adminUserPermissions = new javax.swing.JButton();
+        adminUserData = new javax.swing.JButton();
         adminEventPanel = new javax.swing.JPanel();
         adminEventHeader = new javax.swing.JLabel();
         adminEventList = new javax.swing.JScrollPane();
@@ -60,14 +61,28 @@ public class AdminProfile extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        adminUserNameList.setViewportView(jList2);
+
+        adminUserPermissions.setText("Edit Permissions");
+
+        adminUserData.setText("View User Data");
+        
         adminHeader.setText("Event Management");
 
         adminUserSearch.setText("Search Members:");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        adminUserNameList.setViewportView(jTextArea1);
+        adminUserPermissions.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminUserPermissionsActionPerformed(evt);
+            }
+        });   
 
+        adminUserData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminUserDataActionPerformed(evt);
+            }
+        });   
+        
         javax.swing.GroupLayout adminUserPanelLayout = new javax.swing.GroupLayout(adminUserPanel);
         adminUserPanel.setLayout(adminUserPanelLayout);
         adminUserPanelLayout.setHorizontalGroup(
@@ -80,7 +95,11 @@ public class AdminProfile extends javax.swing.JFrame {
                         .addComponent(adminUserSearch)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(adminUserSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(149, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(adminUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(adminUserPermissions)
+                    .addComponent(adminUserData))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         adminUserPanelLayout.setVerticalGroup(
             adminUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -90,16 +109,27 @@ public class AdminProfile extends javax.swing.JFrame {
                     .addComponent(adminUserSearch)
                     .addComponent(adminUserSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(adminUserNameList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(145, Short.MAX_VALUE))
+                .addGroup(adminUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(adminUserNameList, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
+                    .addGroup(adminUserPanelLayout.createSequentialGroup()
+                        .addComponent(adminUserPermissions)
+                        .addGap(18, 18, 18)
+                        .addComponent(adminUserData)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
+        adminHandle userList = new adminHandle();
+        
+        adminUserSearchField.addKeyListener(userList);
+        
+        
         adminTabPanel.addTab("Users", adminUserPanel);
 
         adminEventHeader.setText("Event List");
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Event 1", "Event 2", "Event 3", "Event 4" };
+            String[] strings = { "Fundraising10252016", "Conference10262016", "Presentation10272016", "Naw10031975" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
@@ -308,6 +338,56 @@ public class AdminProfile extends javax.swing.JFrame {
 
     }
     
+    private void adminUserPermissionsActionPerformed(java.awt.event.ActionEvent evt) {
+    	name = jList2.getSelectedValue();
+    	try{
+    		Database permission = new Database();
+        	if(permission.readPermissions(name)){
+        		System.out.println("this should be a dialog but now switching permissions to User");
+        		permission.writePermissions(name, 0);
+        	}
+        	else{
+        		System.out.println("GOD MODE!@!@!@");
+    			permission.writePermissions(name, 1);
+    		}
+    	}
+    	catch(IOException e){
+    		
+    	}
+    }
+    
+    private void adminUserDataActionPerformed(java.awt.event.ActionEvent evt) {
+    	
+        
+    }
+    
+    private class adminHandle implements KeyListener{
+    	public void keyReleased(KeyEvent e){    			
+    		Database searching = new Database();
+    		String search = "";
+    		search = adminUserSearchField.getText();
+    		try {
+    			String[] strings = new String[searching.findUser(search).size()];
+    			for(int i =0;i<strings.length;i++)
+					strings[i] = searching.findUser(search).get(i);
+			
+    			jList2.setModel(new javax.swing.AbstractListModel<String>() {
+    				public int getSize() { return strings.length; }
+    				public String getElementAt(int i) { return strings[i]; }
+    				});
+    		}
+    		catch (IOException e1) {
+    			System.out.println("wheres the file bro");
+    		}
+    	}
+    	public void keyPressed(KeyEvent e){}
+    	public void keyTyped(KeyEvent e){
+
+
+    	}
+    	
+    }
+    
 
     public static String getEvent(){
     	return event;
@@ -342,12 +422,11 @@ public class AdminProfile extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AdminProfile("").setVisible(true);
+                new AdminProfile().setVisible(true);
             }
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton adminEventCreate;
     private javax.swing.JButton adminEventEnd;
     private javax.swing.JButton adminEventStart;
@@ -373,6 +452,10 @@ public class AdminProfile extends javax.swing.JFrame {
     private javax.swing.JLabel adminUserSearch;
     private javax.swing.JTextField adminUserSearchField;
     private javax.swing.JList<String> jList1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JList<String> jList2;
+    private javax.swing.JButton adminUserPermissions;
+    private javax.swing.JButton adminUserData;
+
+    
     // End of variables declaration//GEN-END:variables
 }

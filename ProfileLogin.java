@@ -113,7 +113,7 @@ public class ProfileLogin extends javax.swing.JFrame {
     		String Email = emailcheck.readEmail(name);
     		if(password.equals(Email))
     			if(emailcheck.readPermissions(name)){
-    	        	new AdminProfile(name).setVisible(true);
+    	        	new AdminProfile().setVisible(true);
     	        	setVisible(false);
     	        }
     			else{
