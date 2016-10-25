@@ -357,7 +357,29 @@ public class AdminProfile extends javax.swing.JFrame {
     }
     
     private void adminUserDataActionPerformed(java.awt.event.ActionEvent evt) {
-    	
+    	name = jList2.getSelectedValue();
+    	try{
+    		Database info = new Database();
+    		String[] strings = new String[info.readEvent(name).size()+5];
+    		strings[0] = name;
+    		strings[1] = info.readEmail(name);
+    		strings[2] = info.readBirth(name);
+    		strings[3] = "Events Attended:";
+    		strings[4] = "";
+    		int index = 0;
+			for(int i =5;i<strings.length;i++){
+				strings[i] = info.readEvent(name).get(index);
+				index++;
+			}
+		
+        	jList2.setModel(new javax.swing.AbstractListModel<String>() {
+        		public int getSize() { return strings.length; }
+        		public String getElementAt(int i) { return strings[i]; }
+        		});
+    	}
+    	catch(IOException e){
+    		
+    	}
         
     }
     

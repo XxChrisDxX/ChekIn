@@ -53,6 +53,33 @@ public class Database {
 		return users;
 	}
 
+	public ArrayList<String> readEvent(String data) throws IOException{
+		FileReader file = new FileReader("database.dat");
+		BufferedReader input = new BufferedReader(file);
+		String name = "";
+		String event;
+		int index;
+		int limit;
+		ArrayList<String> events = new ArrayList<String>();
+		while((line = input.readLine()) != null){
+			int length = line.indexOf(':');
+			name = line.substring(0,length);
+			if(name.equalsIgnoreCase(data)){
+				index = line.indexOf(',');
+				limit = line.lastIndexOf(',');
+				while(index!=limit){
+					event = line.substring(index+1, line.indexOf(',', index+1));
+					events.add(event);
+					index = line.indexOf(',', index+1);
+				}
+				events.add(line.substring(limit+1, line.indexOf(']')));
+			}
+		}
+		file.close();
+		input.close();
+		return events;
+	}
+	
 	public boolean readPermissions(String data) throws IOException{
 		FileReader file = new FileReader("database.dat");
 		BufferedReader input = new BufferedReader(file);
@@ -104,6 +131,34 @@ public class Database {
 						file.close();
 						input.close();
 						return Email;
+					}
+					else
+						break;
+				}
+			}
+				
+		}
+		file.close();
+		input.close();
+		return "";
+	}
+	
+	public String readBirth(String data) throws IOException{
+		FileReader file = new FileReader("database.dat");
+		BufferedReader input = new BufferedReader(file);
+		String name = "";
+		String birth = "";
+		while((line = input.readLine()) != null){
+			int length = line.length();
+
+			for(int i = 0; i<length;i++){
+				if(line.charAt(i)==':'){
+					name = line.substring(0,i);
+					if(data.equalsIgnoreCase(name)){
+						birth = line.substring(line.lastIndexOf(':')+1,line.indexOf('%'));
+						file.close();
+						input.close();
+						return birth;
 					}
 					else
 						break;
