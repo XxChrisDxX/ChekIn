@@ -99,7 +99,7 @@ public class AdminProfile extends javax.swing.JFrame {
         adminEventHeader.setText("Event List");
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Event 1", "Event 2", "Event 3", "Event 4" };
+            String[] strings = { "Fundraising10252016", "Conference10262016", "Presentation10272016", "Naw10031975" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
@@ -347,7 +347,6 @@ public class AdminProfile extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton adminEventCreate;
     private javax.swing.JButton adminEventEnd;
     private javax.swing.JButton adminEventStart;
