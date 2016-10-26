@@ -203,13 +203,15 @@ public class CheckinScreen extends javax.swing.JFrame {
         
         String name = firstField.getText() + " " + lastField.getText();
         if(valid.readName(name)){
-            jDialog1.setVisible(true);
             event = AdminProfile.getEvent();
             if(event.isEmpty())
-            {}
-            else
-            valid.writeEvent(name, event); //writes event to persons name for checkin. the admin could run loop after event is done and search for the event occurance in all users to see how many attended event.
-            
+            {
+            	System.out.println("There should be a warning here....");
+            }
+            else{
+            	jDialog1.setVisible(true);
+            	valid.writeEvent(name, event); 
+            }
         }
         else{
             new CreateProfile(name).setVisible(true);

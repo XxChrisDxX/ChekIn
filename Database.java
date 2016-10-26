@@ -1,4 +1,7 @@
+import java.awt.List;
+import java.util.*;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Database {
@@ -32,7 +35,51 @@ public class Database {
 		input.close();
 		return false;
 	}
+	
+	public ArrayList<String> findUser(String data) throws IOException{
+		FileReader file = new FileReader("database.dat");
+		BufferedReader input = new BufferedReader(file);
+		String name = "";
+		ArrayList<String> users = new ArrayList<String>();
+		while((line = input.readLine()) != null){
+			int length = line.indexOf(':');
+			name = line.substring(0,length);
+			if(name.toLowerCase().contains(data.toLowerCase())){
+				users.add(name);
+			}
+		}
+		file.close();
+		input.close();
+		return users;
+	}
 
+	public ArrayList<String> readEvent(String data) throws IOException{
+		FileReader file = new FileReader("database.dat");
+		BufferedReader input = new BufferedReader(file);
+		String name = "";
+		String event;
+		int index;
+		int limit;
+		ArrayList<String> events = new ArrayList<String>();
+		while((line = input.readLine()) != null){
+			int length = line.indexOf(':');
+			name = line.substring(0,length);
+			if(name.equalsIgnoreCase(data)){
+				index = line.indexOf(',');
+				limit = line.lastIndexOf(',');
+				while(index!=limit){
+					event = line.substring(index+1, line.indexOf(',', index+1));
+					events.add(event);
+					index = line.indexOf(',', index+1);
+				}
+				events.add(line.substring(limit+1, line.indexOf(']')));
+			}
+		}
+		file.close();
+		input.close();
+		return events;
+	}
+	
 	public boolean readPermissions(String data) throws IOException{
 		FileReader file = new FileReader("database.dat");
 		BufferedReader input = new BufferedReader(file);
@@ -96,6 +143,34 @@ public class Database {
 		return "";
 	}
 	
+	public String readBirth(String data) throws IOException{
+		FileReader file = new FileReader("database.dat");
+		BufferedReader input = new BufferedReader(file);
+		String name = "";
+		String birth = "";
+		while((line = input.readLine()) != null){
+			int length = line.length();
+
+			for(int i = 0; i<length;i++){
+				if(line.charAt(i)==':'){
+					name = line.substring(0,i);
+					if(data.equalsIgnoreCase(name)){
+						birth = line.substring(line.lastIndexOf(':')+1,line.indexOf('%'));
+						file.close();
+						input.close();
+						return birth;
+					}
+					else
+						break;
+				}
+			}
+				
+		}
+		file.close();
+		input.close();
+		return "";
+	}
+	
 	public void writeUser(String data) throws IOException{
 		PrintWriter out = new PrintWriter(new FileWriter("database.dat", true));
 		out.println(data);
@@ -147,6 +222,34 @@ public class Database {
 						add.append(":");
 						add.append(email);
 						add.append(line.substring(line.indexOf(':', length+1), line.length() ));
+						out.write(add.toString());
+					}
+					else
+						out.write(line+"\n");	
+			
+		}
+		input.close();
+		out.close();
+		boolean successful = temp.renameTo(main);
+	}
+	
+	public void writePermissions(String data, int Permission) throws IOException{
+		StringBuilder add = new StringBuilder(150);
+		File main = new File("database.dat");
+		File temp = new File("temp.dat");
+		BufferedReader input = new BufferedReader(new FileReader(main));
+		BufferedWriter out = new BufferedWriter(new FileWriter(temp, true));
+		String name = "";
+		
+		while((line = input.readLine()) != null){
+			int length = line.indexOf(':');
+					name = line.substring(0,length);
+					if(name.equalsIgnoreCase(data)){
+						int permissionIndex = line.indexOf('%');
+						add.append(line.substring(0,permissionIndex+1));
+						add.append(Permission);
+						add.append(line.substring(permissionIndex+2, line.length() ));
+						add.append("\n");
 						out.write(add.toString());
 					}
 					else
