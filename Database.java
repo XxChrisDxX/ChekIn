@@ -10,6 +10,67 @@ public class Database {
 	public Database(){
 	}
 
+	public ArrayList<String> readEventList() throws IOException{
+		FileReader file = new FileReader("database.dat");
+		BufferedReader input = new BufferedReader(file);
+		String event = "";
+		ArrayList<String> events = new ArrayList<String>();
+		line = input.readLine();
+		int length = line.length();
+		int index = line.indexOf(',');
+		int limit = line.lastIndexOf(',');
+		while(index!=limit){
+			event = line.substring(index+1, line.indexOf(',', index+1));
+			events.add(event);
+			index = line.indexOf(',', index+1);
+		}
+		events.add(line.substring(limit+1, length));
+				
+		file.close();
+		input.close();
+		return events;
+	}	
+	
+	public void writeEventList(String event) throws IOException{
+		StringBuilder add = new StringBuilder(150);
+		File main = new File("database.dat");
+		File temp = new File("temp.dat");
+		BufferedReader input = new BufferedReader(new FileReader(main));
+		BufferedWriter out = new BufferedWriter(new FileWriter(temp, true));	
+		line = input.readLine();
+		add.append(line.substring(0, line.length()));
+		add.append(",");
+		add.append(event);
+		add.append("\n");
+		out.write(add.toString());
+		while((line = input.readLine()) != null){
+			out.write(line+"\n");	
+		}
+		input.close();
+		out.close();
+		boolean successful = temp.renameTo(main);
+	}
+	
+	public void deleteEventList(String event) throws IOException{
+		StringBuilder add = new StringBuilder(150);
+		File main = new File("database.dat");
+		File temp = new File("temp.dat");
+		BufferedReader input = new BufferedReader(new FileReader(main));
+		BufferedWriter out = new BufferedWriter(new FileWriter(temp, true));	
+		line = input.readLine();
+		add.append(line.substring(0, line.indexOf(event)-1));
+		add.append(line.substring(line.indexOf(event)+event.length(),line.length()));
+		add.append("\n");
+		out.write(add.toString());
+		while((line = input.readLine()) != null){
+			out.write(line+"\n");	
+		}
+		input.close();
+		out.close();
+		boolean successful = temp.renameTo(main);
+		
+	}
+	
 	public boolean readName(String data) throws IOException{
 		FileReader file = new FileReader("database.dat");
 		BufferedReader input = new BufferedReader(file);
@@ -41,6 +102,7 @@ public class Database {
 		BufferedReader input = new BufferedReader(file);
 		String name = "";
 		ArrayList<String> users = new ArrayList<String>();
+		input.readLine();
 		while((line = input.readLine()) != null){
 			int length = line.indexOf(':');
 			name = line.substring(0,length);

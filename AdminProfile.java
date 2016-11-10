@@ -46,6 +46,7 @@ public class AdminProfile extends javax.swing.JFrame {
         adminEventEdit = new javax.swing.JButton();
         adminEventEnd = new javax.swing.JButton();
         adminEventCreate = new javax.swing.JButton();
+        adminEventDelete = new javax.swing.JButton();
         adminEventStart = new javax.swing.JButton();
         adminStatPanel = new javax.swing.JPanel();
         adminStatHeader = new javax.swing.JLabel();
@@ -128,17 +129,32 @@ public class AdminProfile extends javax.swing.JFrame {
 
         adminEventHeader.setText("Event List");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+  /*      jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Fundraising10252016", "Conference10262016", "Presentation10272016", "Naw10031975" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
-        });
+        });*/
         
         jList1.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 jList1ValueChanged(evt);
             }
         });
+                	
+        try{
+        	Database eventlist = new Database();
+        	String[] strings = new String[eventlist.readEventList().size()];
+    		for(int i =0;i<strings.length;i++){
+    			strings[i] = eventlist.readEventList().get(i);
+    		}
+        	jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        		public int getSize() { return strings.length; }
+        		public String getElementAt(int i) { return strings[i]; }
+        		});
+        }
+        catch(IOException e){
+        	
+        }
         
         adminEventList.setViewportView(jList1);
 
@@ -149,6 +165,8 @@ public class AdminProfile extends javax.swing.JFrame {
         adminEventCreate.setText("Create New Event");
 
         adminEventStart.setText("Start Event");
+
+        adminEventDelete.setText("Delete Event");
 
         javax.swing.GroupLayout adminEventPanelLayout = new javax.swing.GroupLayout(adminEventPanel);
         adminEventPanel.setLayout(adminEventPanelLayout);
@@ -166,7 +184,9 @@ public class AdminProfile extends javax.swing.JFrame {
                             .addComponent(adminEventEnd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(adminEventEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addComponent(adminEventCreate)))
+                        .addGroup(adminEventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(adminEventCreate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(adminEventDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
         adminEventPanelLayout.setVerticalGroup(
@@ -182,12 +202,15 @@ public class AdminProfile extends javax.swing.JFrame {
                             .addComponent(adminEventEdit)
                             .addComponent(adminEventCreate))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(adminEventStart)
+                        .addGroup(adminEventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(adminEventStart)
+                            .addComponent(adminEventDelete))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(adminEventEnd)))
                 .addContainerGap(91, Short.MAX_VALUE))
         );
-
+        
+  
         adminTabPanel.addTab("Events", adminEventPanel);
 
         adminStatHeader.setText("Generate Event Statistics");
@@ -210,6 +233,24 @@ public class AdminProfile extends javax.swing.JFrame {
                 adminEventEndActionPerformed(evt);
             }
         });  
+        
+        adminEventCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminEventCreateActionPerformed(evt);
+            }
+        });   
+        
+        adminEventDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminEventDeleteActionPerformed(evt);
+            }
+        });   
+        
+        adminEventEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminEventEditActionPerformed(evt);
+            }
+        });   
         
         adminStatEvent.setText("Event Type");
 
@@ -322,6 +363,76 @@ public class AdminProfile extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_adminStatGenerateActionPerformed
 
+    private void adminEventDeleteActionPerformed(java.awt.event.ActionEvent evt) {
+    	int index = jList1.getSelectedIndex();
+    	try{
+    		Database deleteevent = new Database();
+    		deleteevent.deleteEventList(jList1.getSelectedValue());
+    	}
+    	catch(IOException e){
+    		
+    	}
+    	String[] create = new String[jList1.getModel().getSize()];
+    	for(int i = 0; i<index;i++)
+    		create[i]= jList1.getModel().getElementAt(i);
+    	for(int j = index+1; j<jList1.getModel().getSize();j++)
+    		create[j]= jList1.getModel().getElementAt(j);
+    	jList1.setModel(new javax.swing.AbstractListModel<String>() {
+    		public int getSize() { return create.length; }
+    		public String getElementAt(int i) { return create[i]; }
+    		});  
+    	
+    }
+    
+    private void adminEventEditActionPerformed(java.awt.event.ActionEvent evt) {
+    	int index = jList1.getSelectedIndex();
+    	String eventType;
+    	String eventDate;
+    	String[] create = new String[jList1.getModel().getSize()];
+    	for(int i = 0; i<jList1.getModel().getSize();i++)
+    		create[i]= jList1.getModel().getElementAt(i);
+    	eventType = JOptionPane.showInputDialog("Enter Event Type.");
+    	eventDate = JOptionPane.showInputDialog("Enter Event Date.\n"+"MMDDYYYY");
+    	create[index] = eventType+eventDate;
+    	try{
+    		Database event = new Database();
+    		event.deleteEventList(jList1.getSelectedValue());
+    		event.writeEventList(eventType+eventDate);
+    	}
+    	catch(IOException e){
+    		
+    	}
+    	jList1.setModel(new javax.swing.AbstractListModel<String>() {
+    		public int getSize() { return create.length; }
+    		public String getElementAt(int i) { return create[i]; }
+    		});    	
+    	
+    }
+    
+    private void adminEventCreateActionPerformed(java.awt.event.ActionEvent evt) {
+    	String eventType;
+    	String eventDate;
+    	String[] create = new String[jList1.getModel().getSize()+1];
+    	for(int i = 0; i<jList1.getModel().getSize();i++)
+    		create[i]= jList1.getModel().getElementAt(i);
+    	eventType = JOptionPane.showInputDialog("Enter Event Type.");
+    	eventDate = JOptionPane.showInputDialog("Enter Event Date.\n"+"MMDDYYYY");
+    	create[jList1.getModel().getSize()] = eventType+eventDate;
+    	jList1.setModel(new javax.swing.AbstractListModel<String>() {
+    		public int getSize() { return create.length; }
+    		public String getElementAt(int i) { return create[i]; }
+    		});
+    	try{
+    		String eventformal=eventType+eventDate;
+    		Database newevent = new Database();
+    		newevent.writeEventList(eventformal);
+    	}
+    	catch(IOException e){
+    		
+    	}
+    	
+    }
+    
     private void adminEventStartActionPerformed(java.awt.event.ActionEvent evt) {
     	event = jList1.getSelectedValue();
     	setVisible(false);
@@ -362,8 +473,8 @@ public class AdminProfile extends javax.swing.JFrame {
     		Database info = new Database();
     		String[] strings = new String[info.readEvent(name).size()+5];
     		strings[0] = name;
-    		strings[1] = info.readEmail(name);
-    		strings[2] = info.readBirth(name);
+    		strings[1] = "Email: " + info.readEmail(name);
+    		strings[2] = "DOB: " +info.readBirth(name);
     		strings[3] = "Events Attended:";
     		strings[4] = "";
     		int index = 0;
@@ -449,6 +560,7 @@ public class AdminProfile extends javax.swing.JFrame {
         });
     }
 
+    private javax.swing.JButton adminEventDelete;
     private javax.swing.JButton adminEventCreate;
     private javax.swing.JButton adminEventEnd;
     private javax.swing.JButton adminEventStart;
