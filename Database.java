@@ -19,13 +19,20 @@ public class Database {
 		int length = line.length();
 		int index = line.indexOf(',');
 		int limit = line.lastIndexOf(',');
+		if(line.indexOf(':')==length-1){
+			input.close();
+			file.close();
+			events.add("No Events");
+			return events;
+		}
+		else{
 		while(index!=limit){
 			event = line.substring(index+1, line.indexOf(',', index+1));
 			events.add(event);
 			index = line.indexOf(',', index+1);
 		}
 		events.add(line.substring(limit+1, length));
-				
+		}		
 		file.close();
 		input.close();
 		return events;
@@ -77,7 +84,6 @@ public class Database {
 		String name = "";
 		while((line = input.readLine()) != null){
 			int length = line.length();
-
 			for(int i = 0; i<length;i++){
 				if(line.charAt(i)==':'){
 					name = line.substring(0,i);

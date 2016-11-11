@@ -90,16 +90,16 @@ public class AdminProfile extends javax.swing.JFrame {
             adminUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(adminUserPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(adminUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(adminUserNameList)
+                .addGroup(adminUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(adminUserPanelLayout.createSequentialGroup()
                         .addComponent(adminUserSearch)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(adminUserSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                        .addComponent(adminUserSearchField))
+                    .addComponent(adminUserNameList, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(adminUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(adminUserPermissions)
-                    .addComponent(adminUserData))
+                    .addComponent(adminUserData, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         adminUserPanelLayout.setVerticalGroup(
@@ -129,11 +129,6 @@ public class AdminProfile extends javax.swing.JFrame {
 
         adminEventHeader.setText("Event List");
 
-  /*      jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Fundraising10252016", "Conference10262016", "Presentation10272016", "Naw10031975" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });*/
         
         jList1.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -175,19 +170,18 @@ public class AdminProfile extends javax.swing.JFrame {
             .addGroup(adminEventPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(adminEventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(adminEventHeader)
                     .addGroup(adminEventPanelLayout.createSequentialGroup()
-                        .addComponent(adminEventList, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(adminEventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(adminEventStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(adminEventEnd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(adminEventEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(adminEventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(adminEventCreate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(adminEventDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(37, Short.MAX_VALUE))
+                        .addComponent(adminEventList, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(adminEventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(adminEventDelete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(adminEventEdit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(adminEventStart, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(adminEventEnd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(adminEventCreate)))
+                    .addGroup(adminEventPanelLayout.createSequentialGroup()
+                        .addComponent(adminEventHeader)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         adminEventPanelLayout.setVerticalGroup(
             adminEventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,20 +190,19 @@ public class AdminProfile extends javax.swing.JFrame {
                 .addComponent(adminEventHeader)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(adminEventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(adminEventList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(adminEventPanelLayout.createSequentialGroup()
-                        .addGroup(adminEventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(adminEventEdit)
-                            .addComponent(adminEventCreate))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(adminEventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(adminEventStart)
-                            .addComponent(adminEventDelete))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(adminEventEnd)))
-                .addContainerGap(91, Short.MAX_VALUE))
+                        .addComponent(adminEventCreate)
+                        .addGap(18, 18, 18)
+                        .addComponent(adminEventDelete)
+                        .addGap(18, 18, 18)
+                        .addComponent(adminEventEdit)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(adminEventStart)
+                        .addGap(18, 18, 18)
+                        .addComponent(adminEventEnd))
+                    .addComponent(adminEventList, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE))
+                .addContainerGap())
         );
-        
   
         adminTabPanel.addTab("Events", adminEventPanel);
 
@@ -364,23 +357,22 @@ public class AdminProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_adminStatGenerateActionPerformed
 
     private void adminEventDeleteActionPerformed(java.awt.event.ActionEvent evt) {
-    	int index = jList1.getSelectedIndex();
+
     	try{
     		Database deleteevent = new Database();
     		deleteevent.deleteEventList(jList1.getSelectedValue());
-    	}
-    	catch(IOException e){
-    		
-    	}
-    	String[] create = new String[jList1.getModel().getSize()];
-    	for(int i = 0; i<index;i++)
-    		create[i]= jList1.getModel().getElementAt(i);
-    	for(int j = index+1; j<jList1.getModel().getSize();j++)
-    		create[j]= jList1.getModel().getElementAt(j);
-    	jList1.setModel(new javax.swing.AbstractListModel<String>() {
-    		public int getSize() { return create.length; }
-    		public String getElementAt(int i) { return create[i]; }
-    		});  
+        	String[] strings = new String[deleteevent.readEventList().size()];
+    		for(int i =0;i<strings.length;i++){
+    			strings[i] = deleteevent.readEventList().get(i);
+    		}
+        	jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        		public int getSize() { return strings.length; }
+        		public String getElementAt(int i) { return strings[i]; }
+        		});
+        }
+        catch(IOException e){
+        	
+        }
     	
     }
     
@@ -388,49 +380,47 @@ public class AdminProfile extends javax.swing.JFrame {
     	int index = jList1.getSelectedIndex();
     	String eventType;
     	String eventDate;
-    	String[] create = new String[jList1.getModel().getSize()];
-    	for(int i = 0; i<jList1.getModel().getSize();i++)
-    		create[i]= jList1.getModel().getElementAt(i);
     	eventType = JOptionPane.showInputDialog("Enter Event Type.");
-    	eventDate = JOptionPane.showInputDialog("Enter Event Date.\n"+"MMDDYYYY");
-    	create[index] = eventType+eventDate;
+    	eventDate = JOptionPane.showInputDialog("Enter Event Date.\n"+"MM/DD/YYYY");
     	try{
     		Database event = new Database();
     		event.deleteEventList(jList1.getSelectedValue());
-    		event.writeEventList(eventType+eventDate);
-    	}
-    	catch(IOException e){
-    		
-    	}
-    	jList1.setModel(new javax.swing.AbstractListModel<String>() {
-    		public int getSize() { return create.length; }
-    		public String getElementAt(int i) { return create[i]; }
-    		});    	
+    		event.writeEventList(eventType+" "+eventDate);        	
+    		String[] strings = new String[event.readEventList().size()];
+    		for(int i =0;i<strings.length;i++){
+    			strings[i] = event.readEventList().get(i);
+    		}
+        	jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        		public int getSize() { return strings.length; }
+        		public String getElementAt(int i) { return strings[i]; }
+        		});
+        }
+        catch(IOException e){
+        	
+        } 	
     	
     }
     
     private void adminEventCreateActionPerformed(java.awt.event.ActionEvent evt) {
     	String eventType;
     	String eventDate;
-    	String[] create = new String[jList1.getModel().getSize()+1];
-    	for(int i = 0; i<jList1.getModel().getSize();i++)
-    		create[i]= jList1.getModel().getElementAt(i);
     	eventType = JOptionPane.showInputDialog("Enter Event Type.");
-    	eventDate = JOptionPane.showInputDialog("Enter Event Date.\n"+"MMDDYYYY");
-    	create[jList1.getModel().getSize()] = eventType+eventDate;
-    	jList1.setModel(new javax.swing.AbstractListModel<String>() {
-    		public int getSize() { return create.length; }
-    		public String getElementAt(int i) { return create[i]; }
-    		});
+    	eventDate = JOptionPane.showInputDialog("Enter Event Date.\n"+"MM/DD/YYYY");
     	try{
-    		String eventformal=eventType+eventDate;
     		Database newevent = new Database();
-    		newevent.writeEventList(eventformal);
-    	}
-    	catch(IOException e){
-    		
-    	}
-    	
+    		newevent.writeEventList(eventType+" "+eventDate);
+    		String[] strings = new String[newevent.readEventList().size()];
+    		for(int i =0;i<strings.length;i++){
+    			strings[i] = newevent.readEventList().get(i);
+    		}
+        	jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        		public int getSize() { return strings.length; }
+        		public String getElementAt(int i) { return strings[i]; }
+        		});
+        }
+        catch(IOException e){
+        	
+        } 	
     }
     
     private void adminEventStartActionPerformed(java.awt.event.ActionEvent evt) {
