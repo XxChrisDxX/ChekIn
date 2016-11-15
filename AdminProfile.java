@@ -1,6 +1,14 @@
 import javax.swing.*;
 import java.awt.event.*;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
 import java.awt.*;
 
 /*
@@ -46,8 +54,8 @@ public class AdminProfile extends javax.swing.JFrame {
         adminEventEdit = new javax.swing.JButton();
         adminEventEnd = new javax.swing.JButton();
         adminEventCreate = new javax.swing.JButton();
-        adminEventDelete = new javax.swing.JButton();
         adminEventStart = new javax.swing.JButton();
+        adminEventDelete = new javax.swing.JButton();
         adminStatPanel = new javax.swing.JPanel();
         adminStatHeader = new javax.swing.JLabel();
         adminStatEventMenu = new javax.swing.JComboBox<>();
@@ -55,10 +63,10 @@ public class AdminProfile extends javax.swing.JFrame {
         adminStatAgeMenu = new javax.swing.JComboBox<>();
         adminStatData = new javax.swing.JLabel();
         adminStatReport = new javax.swing.JLabel();
-        adminStatPopular = new javax.swing.JCheckBox();
-        adminStatAverage = new javax.swing.JCheckBox();
-        adminStatBest = new javax.swing.JCheckBox();
         adminStatGenerate = new javax.swing.JButton();
+        adminStatPopularEvent = new javax.swing.JButton();
+        adminStatPopularDay = new javax.swing.JButton();
+        adminStatAttendance = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -90,16 +98,16 @@ public class AdminProfile extends javax.swing.JFrame {
             adminUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(adminUserPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(adminUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(adminUserNameList)
+                .addGroup(adminUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(adminUserPanelLayout.createSequentialGroup()
                         .addComponent(adminUserSearch)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(adminUserSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                        .addComponent(adminUserSearchField))
+                    .addComponent(adminUserNameList, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(adminUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(adminUserPermissions)
-                    .addComponent(adminUserData))
+                    .addComponent(adminUserData, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         adminUserPanelLayout.setVerticalGroup(
@@ -129,11 +137,6 @@ public class AdminProfile extends javax.swing.JFrame {
 
         adminEventHeader.setText("Event List");
 
-  /*      jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Fundraising10252016", "Conference10262016", "Presentation10272016", "Naw10031975" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });*/
         
         jList1.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -175,19 +178,18 @@ public class AdminProfile extends javax.swing.JFrame {
             .addGroup(adminEventPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(adminEventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(adminEventHeader)
                     .addGroup(adminEventPanelLayout.createSequentialGroup()
-                        .addComponent(adminEventList, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(adminEventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(adminEventStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(adminEventEnd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(adminEventEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(adminEventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(adminEventCreate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(adminEventDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(37, Short.MAX_VALUE))
+                        .addComponent(adminEventList, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(adminEventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(adminEventDelete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(adminEventEdit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(adminEventStart, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(adminEventEnd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(adminEventCreate)))
+                    .addGroup(adminEventPanelLayout.createSequentialGroup()
+                        .addComponent(adminEventHeader)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         adminEventPanelLayout.setVerticalGroup(
             adminEventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,26 +198,40 @@ public class AdminProfile extends javax.swing.JFrame {
                 .addComponent(adminEventHeader)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(adminEventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(adminEventList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(adminEventPanelLayout.createSequentialGroup()
-                        .addGroup(adminEventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(adminEventEdit)
-                            .addComponent(adminEventCreate))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(adminEventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(adminEventStart)
-                            .addComponent(adminEventDelete))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(adminEventEnd)))
-                .addContainerGap(91, Short.MAX_VALUE))
+                        .addComponent(adminEventCreate)
+                        .addGap(18, 18, 18)
+                        .addComponent(adminEventDelete)
+                        .addGap(18, 18, 18)
+                        .addComponent(adminEventEdit)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(adminEventStart)
+                        .addGap(18, 18, 18)
+                        .addComponent(adminEventEnd))
+                    .addComponent(adminEventList, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE))
+                .addContainerGap())
         );
-        
   
         adminTabPanel.addTab("Events", adminEventPanel);
 
         adminStatHeader.setText("Generate Event Statistics");
 
-        adminStatEventMenu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fundraiser", "study", "?", "?" }));
+        try{
+        	Database eventlist = new Database();
+        	Set<String> names = new HashSet<String>(eventlist.readEventAll());//creates set that eliminates duplicates
+        	String[] strings = new String[names.size()];
+        	int i =0;
+        	for(String s:names){
+        		strings[i]=s;
+        		i++;
+        	}
+    		adminStatEventMenu.setModel(new javax.swing.DefaultComboBoxModel<>(strings));    		
+        }
+        catch(IOException e){
+        	
+        }       
+        
+        
         adminStatEventMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 adminStatEventMenuActionPerformed(evt);
@@ -254,18 +270,12 @@ public class AdminProfile extends javax.swing.JFrame {
         
         adminStatEvent.setText("Event Type");
 
-        adminStatAgeMenu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Age", "Attendance", "Day", "Frequency" }));
+        adminStatAgeMenu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Age", "Attendance", "Day of Week" }));
         adminStatAgeMenu.setToolTipText("");
 
         adminStatData.setText("Data Type");
 
         adminStatReport.setText("Event Reports");
-
-        adminStatPopular.setText("Popular");
-
-        adminStatAverage.setText("Averages");
-
-        adminStatBest.setText("YTD Best");
 
         adminStatGenerate.setText("Generate!");
         adminStatGenerate.addActionListener(new java.awt.event.ActionListener() {
@@ -274,6 +284,28 @@ public class AdminProfile extends javax.swing.JFrame {
             }
         });
 
+        adminStatPopularEvent.setText("Popular Event");
+
+        adminStatPopularDay.setText("Popular DayofWeek");
+
+        adminStatAttendance.setText("Attendance of All");
+        adminStatAttendance.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminStatAttendanceActionPerformed(evt);
+            }
+        });
+
+        adminStatPopularDay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminStatPopularDayActionPerformed(evt);
+            }
+        });
+        
+        adminStatPopularEvent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminStatPopularEventActionPerformed(evt);
+            }
+        });
         javax.swing.GroupLayout adminStatPanelLayout = new javax.swing.GroupLayout(adminStatPanel);
         adminStatPanel.setLayout(adminStatPanelLayout);
         adminStatPanelLayout.setHorizontalGroup(
@@ -281,54 +313,60 @@ public class AdminProfile extends javax.swing.JFrame {
             .addGroup(adminStatPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(adminStatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(adminStatPanelLayout.createSequentialGroup()
-                        .addGroup(adminStatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(adminStatEventMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(adminStatEvent))
-                        .addContainerGap(294, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, adminStatPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(adminStatHeader)
-                        .addGap(117, 117, 117))
+                        .addGroup(adminStatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, adminStatPanelLayout.createSequentialGroup()
+                                .addComponent(adminStatHeader)
+                                .addGap(117, 117, 117))
+                            .addComponent(adminStatGenerate, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(adminStatPanelLayout.createSequentialGroup()
                         .addGroup(adminStatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(adminStatAverage)
-                            .addComponent(adminStatPopular)
-                            .addComponent(adminStatAgeMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(adminStatData)
-                            .addComponent(adminStatReport))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(adminStatPanelLayout.createSequentialGroup()
-                        .addComponent(adminStatBest)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(adminStatGenerate))))
+                            .addComponent(adminStatEvent)
+                            .addComponent(adminStatEventMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(adminStatAgeMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
+                        .addGroup(adminStatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, adminStatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(adminStatReport)
+                                .addComponent(adminStatPopularDay, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+                                .addComponent(adminStatPopularEvent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(adminStatAttendance, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())))
         );
         adminStatPanelLayout.setVerticalGroup(
             adminStatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(adminStatPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(adminStatHeader)
-                .addGap(3, 3, 3)
-                .addComponent(adminStatEvent)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(adminStatEventMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(adminStatData)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(adminStatAgeMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(adminStatReport)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(adminStatPopular)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(adminStatAverage)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(adminStatBest)
-                .addContainerGap(19, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, adminStatPanelLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(adminStatGenerate))
+                .addGroup(adminStatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(adminStatPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(adminStatHeader)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(adminStatReport, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(adminStatPanelLayout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(adminStatEvent)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(adminStatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(adminStatEventMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(adminStatPopularEvent))))
+                .addGroup(adminStatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(adminStatPanelLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(adminStatPopularDay)
+                        .addGap(18, 18, 18)
+                        .addComponent(adminStatAttendance)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                        .addComponent(adminStatGenerate))
+                    .addGroup(adminStatPanelLayout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addComponent(adminStatData)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(adminStatAgeMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
+
 
         adminTabPanel.addTab("Statistics", adminStatPanel);
 
@@ -353,34 +391,308 @@ public class AdminProfile extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
     private void adminStatEventMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminStatEventMenuActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_adminStatEventMenuActionPerformed
+        
+    }
 
-    private void adminStatGenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminStatGenerateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_adminStatGenerateActionPerformed
+    private void adminStatGenerateActionPerformed(java.awt.event.ActionEvent evt) {
+    	
+		try{
+			Database eventstats = new Database();
+			ArrayList<String> age = new ArrayList<String>(eventstats.readEventStats().size()/3);
+			ArrayList<String> name = new ArrayList<String>(eventstats.readEventStats().size()/3);
+			ArrayList<String> date = new ArrayList<String>(eventstats.readEventStats().size()/3);
+			String selection = adminStatEventMenu.getItemAt(adminStatEventMenu.getSelectedIndex());
+			String dataselection = adminStatAgeMenu.getItemAt(adminStatAgeMenu.getSelectedIndex());
+		
+			for(int j = 0;j<eventstats.readEventStats().size();j++){
+				if(j%3 == 0)
+					name.add(eventstats.readEventStats().get(j));
+				if(j%3 == 1)
+					date.add(eventstats.readEventStats().get(j));
+				if(j%3 == 2)
+					age.add(eventstats.readEventStats().get(j));
+			}
+			ArrayList<String> tempname = new ArrayList<String>();
+			ArrayList<String> tempdate = new ArrayList<String>();  		
+			ArrayList<String> tempage = new ArrayList<String>();
 
-    private void adminEventDeleteActionPerformed(java.awt.event.ActionEvent evt) {
-    	int index = jList1.getSelectedIndex();
+			for(int j = 0;j<name.size();j++){
+				if(selection.equals(name.get(j))){
+					tempname.add(name.get(j));
+					tempdate.add(date.get(j));
+					tempage.add(age.get(j));
+				}  			
+			}
+			
+			if(dataselection.equals("Day of Week")){
+				//day of week popularity of attendance
+				String[] dayarr = {"SUNDAY","MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY"}; //display for axes
+				double[][] daydata = new double[2][7];
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+				int count = 0;
+				//if data type selected is day and event type is selected <selection>
+				//else does string i : date for all types of events most popular dayofweek <button>
+				for(String i:tempdate){
+					LocalDate eventDay = LocalDate.parse(i,formatter);
+					if(eventDay.getDayOfWeek().name().equals(dayarr[0])){
+						daydata[0][0]+=1;//attendance increment
+						daydata[1][0]+=Double.parseDouble(tempage.get(count));//age addition for all who attended this day
+					}
+					else if(eventDay.getDayOfWeek().name().equals(dayarr[1])){
+						daydata[0][1]+=1;
+						daydata[1][1]+=Double.parseDouble(tempage.get(count));
+					}
+					else if(eventDay.getDayOfWeek().name().equals(dayarr[2])){
+						daydata[0][2]+=1;
+						daydata[1][2]+=Double.parseDouble(tempage.get(count));
+					}
+					else if(eventDay.getDayOfWeek().name().equals(dayarr[3])){
+						daydata[0][3]+=1;
+						daydata[1][3]+=Double.parseDouble(tempage.get(count));
+					}
+					else if(eventDay.getDayOfWeek().name().equals(dayarr[4])){
+						daydata[0][4]+=1;
+						daydata[1][4]+=Double.parseDouble(tempage.get(count));
+					}
+					else if(eventDay.getDayOfWeek().name().equals(dayarr[5])){
+						daydata[0][5]+=1;
+						daydata[1][5]+=Double.parseDouble(tempage.get(count));
+					}
+					else if(eventDay.getDayOfWeek().name().equals(dayarr[6])){
+						daydata[0][6]+=1;
+						daydata[1][6]+=Double.parseDouble(tempage.get(count));
+					}
+					count++;
+				}
+				for(int i= 0;i<7;i++){
+					daydata[1][i]=daydata[1][i]/daydata[0][i];//divides entire addition of age by attendees for avg age for that day
+	    			System.out.println(dayarr[i]+": "+ daydata[0][i]);
+	    			System.out.println(daydata[1][i]);				
+				}
+			}
+			
+			
+			else if(dataselection.equals("Age")){
+				//age range
+				//datatype + age = line graph <selection>
+				Set<String> agelisting = new TreeSet<String>(tempage);
+				double[] agedata = new double[agelisting.size()];//holds number of certain age
+				String[] agename = agelisting.toArray(new String[0]);//display for axes
+				int count = 0;
+				for(String t:agelisting){
+					for(int i = 0;i<tempage.size();i++){
+						if(tempage.get(i).equals(t)){
+							agedata[count]+=1;
+						}
+					}
+					count++;
+				}
+				for(int i = 0;i<agelisting.size();i++){
+					System.out.println(agename[i]+": "+agedata[i]);
+				}
+			}
+	
+			
+			else if(dataselection.equals("Attendance")){
+				//attendance for an event type type+attendance <selection>
+				//splits event type by date and attendance on that date
+				Set<String> datelisting = new TreeSet<String>(tempdate);
+				double[][] data = new double[2][datelisting.size()];
+				String[] datename = datelisting.toArray(new String[0]);//display for axes
+				int count = 0;
+				for(String t:datelisting){
+					data[0][count] = Collections.frequency(tempdate,t);
+					double avgage = 0;
+					int index = 0;
+					for(int k = 0;k<data[0][count];k++){
+						int storage =tempdate.subList(index,tempdate.size()).indexOf(t);
+						avgage+=Double.parseDouble(tempage.get(storage+k));
+						index = storage+1;
+					}
+					data[1][count]=avgage/data[0][count];
+					count++;
+				}
+				for(int i=0;i<datelisting.size();i++){
+					System.out.println(datename[i]+": "+data[0][i]);
+					System.out.println(data[1][i]);
+				}
+			}
+		}	
+		catch(IOException e){
+			
+		}    	
+    }
+    
+    private void adminStatAttendanceActionPerformed(java.awt.event.ActionEvent evt) {
+    	
     	try{
-    		Database deleteevent = new Database();
-    		deleteevent.deleteEventList(jList1.getSelectedValue());
+    		Database eventpopular = new Database();
+    		ArrayList<String> age = new ArrayList<String>(eventpopular.readEventStats().size()/3);
+    		ArrayList<String> name = new ArrayList<String>(eventpopular.readEventStats().size()/3);
+    		ArrayList<String> date = new ArrayList<String>(eventpopular.readEventStats().size()/3);
+		
+    		for(int j = 0;j<eventpopular.readEventStats().size();j++){
+    			if(j%3 == 0)
+    				name.add(eventpopular.readEventStats().get(j));
+    			if(j%3 == 1)
+    				date.add(eventpopular.readEventStats().get(j));
+    			if(j%3 == 2)
+    				age.add(eventpopular.readEventStats().get(j));
+    		}        	
+    		//attendance of each event on whole <button>
+    		int count = 0;
+    		Set<String> namelisting = new TreeSet<String>(name);//does bar graph of attendance to everytype event should be a button
+    		double[][] namedata = new double[2][namelisting.size()];
+    		String[] namearray = namelisting.toArray(new String[0]);//display for axes
+    		for(String t:namelisting){
+    			double avgage = 0;
+    			int index = 0;
+    			namedata[0][count] = Collections.frequency(name,t);
+    			for(int i = 0;i<namedata[0][count];i++){
+    				int storage = name.subList(index, name.size()).indexOf(t);
+    				avgage+=Double.parseDouble(age.get(storage+i));
+    				index = storage+1;
+    			}
+    			namedata[1][count] = avgage/namedata[0][count]; //age array for avg age in each event type
+    			count++;
+    		}
+    		for(int i=0;i<namelisting.size();i++){
+    			System.out.println(namearray[i]+": "+namedata[0][i]);
+    			System.out.println(namedata[1][i]);
+    		}
+    	}
+    	catch(IOException e){
+    	
+    	}
+    }
+
+    private void adminStatPopularDayActionPerformed(java.awt.event.ActionEvent evt) {
+    	try{
+    		Database eventpopular = new Database();
+    		ArrayList<String> age = new ArrayList<String>(eventpopular.readEventStats().size()/3);
+    		ArrayList<String> name = new ArrayList<String>(eventpopular.readEventStats().size()/3);
+    		ArrayList<String> date = new ArrayList<String>(eventpopular.readEventStats().size()/3);
+		
+    		for(int j = 0;j<eventpopular.readEventStats().size();j++){
+    			if(j%3 == 0)
+    				name.add(eventpopular.readEventStats().get(j));
+    			if(j%3 == 1)
+    				date.add(eventpopular.readEventStats().get(j));
+    			if(j%3 == 2)
+    				age.add(eventpopular.readEventStats().get(j));
+    		}        	
+    		//day of week popularity of attendance
+    		String[] dayarr = {"SUNDAY","MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY"}; //display for axes
+    		double[][] daydata = new double[2][7];
+    		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+    		int count = 0;
+    		//if data type selected is day and event type is selected <selection>
+    		//else does string i : date for all types of events most popular dayofweek <button>
+    		for(String i:date){
+    			LocalDate eventDay = LocalDate.parse(i,formatter);
+    			if(eventDay.getDayOfWeek().name().equals(dayarr[0])){
+    				daydata[0][0]+=1;//attendance increment
+    				daydata[1][0]+=Double.parseDouble(age.get(count));//age addition for all who attended this day
+    			}	
+    			else if(eventDay.getDayOfWeek().name().equals(dayarr[1])){
+    				daydata[0][1]+=1;
+    				daydata[1][1]+=Double.parseDouble(age.get(count));	
+    			}
+    			else if(eventDay.getDayOfWeek().name().equals(dayarr[2])){
+    				daydata[0][2]+=1;
+    				daydata[1][2]+=Double.parseDouble(age.get(count));
+    			}
+    			else if(eventDay.getDayOfWeek().name().equals(dayarr[3])){
+    				daydata[0][3]+=1;
+    				daydata[1][3]+=Double.parseDouble(age.get(count));
+    			}
+    			else if(eventDay.getDayOfWeek().name().equals(dayarr[4])){
+    				daydata[0][4]+=1;
+    				daydata[1][4]+=Double.parseDouble(age.get(count));
+    			}
+    			else if(eventDay.getDayOfWeek().name().equals(dayarr[5])){
+    				daydata[0][5]+=1;
+    				daydata[1][5]+=Double.parseDouble(age.get(count));
+    			}
+    			else if(eventDay.getDayOfWeek().name().equals(dayarr[6])){
+    				daydata[0][6]+=1;
+    				daydata[1][6]+=Double.parseDouble(age.get(count));
+    			}
+    			count++;
+    		}
+    		for(int i= 0;i<7;i++){
+    			daydata[1][i]=daydata[1][i]/daydata[0][i];//divides entire addition of age by attendees for avg age for that day
+    			System.out.println(dayarr[i]+": "+ daydata[0][i]);
+    			System.out.println(daydata[1][i]);
+
+    		}
     	}
     	catch(IOException e){
     		
     	}
-    	String[] create = new String[jList1.getModel().getSize()];
-    	for(int i = 0; i<index;i++)
-    		create[i]= jList1.getModel().getElementAt(i);
-    	for(int j = index+1; j<jList1.getModel().getSize();j++)
-    		create[j]= jList1.getModel().getElementAt(j);
-    	jList1.setModel(new javax.swing.AbstractListModel<String>() {
-    		public int getSize() { return create.length; }
-    		public String getElementAt(int i) { return create[i]; }
-    		});  
+    }
+    
+    
+    private void adminStatPopularEventActionPerformed(java.awt.event.ActionEvent evt) {
+		
+    	try{
+    		Database eventpopular = new Database();
+    		ArrayList<String> age = new ArrayList<String>(eventpopular.readEventStats().size()/3);
+    		ArrayList<String> name = new ArrayList<String>(eventpopular.readEventStats().size()/3);
+    		ArrayList<String> date = new ArrayList<String>(eventpopular.readEventStats().size()/3);
+		
+    		for(int j = 0;j<eventpopular.readEventStats().size();j++){
+    			if(j%3 == 0)
+    				name.add(eventpopular.readEventStats().get(j));
+    			if(j%3 == 1)
+    				date.add(eventpopular.readEventStats().get(j));
+    			if(j%3 == 2)
+    				age.add(eventpopular.readEventStats().get(j));
+    		}    	
+    		//most popular event to date <button>
+    		ArrayList<String> eventSpecific = new ArrayList<String>();
+    		for(int i =0; i<name.size(); i++){
+    			eventSpecific.add(name.get(i)+" "+date.get(i));
+    		}
+    		Set<String> eventSpecificList = new TreeSet<String>(eventSpecific);
+    		String[] specificname = eventSpecificList.toArray(new String[0]);//display for axes
+    		int frequency = 0;
+    		int count = 0;
+    		int freqindex = 0;
+    		for(String i:eventSpecificList){
+    			if(Collections.frequency(eventSpecific, i)>frequency){
+    				frequency = Collections.frequency(eventSpecific, i);
+    				freqindex = count;
+    			}
+    			count++;
+    		}
+    		System.out.println(specificname[freqindex]+" frequncy is:"+frequency);//finds most popular event.
+    	}
+    	catch(IOException e){
+    		
+    	}
+    }
+    
+    private void adminEventDeleteActionPerformed(java.awt.event.ActionEvent evt) {
+
+    	try{
+    		Database deleteevent = new Database();
+    		deleteevent.deleteEventList(jList1.getSelectedValue());
+        	String[] strings = new String[deleteevent.readEventList().size()];
+    		for(int i =0;i<strings.length;i++){
+    			strings[i] = deleteevent.readEventList().get(i);
+    		}
+        	jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        		public int getSize() { return strings.length; }
+        		public String getElementAt(int i) { return strings[i]; }
+        		});
+        }
+        catch(IOException e){
+        	
+        }
     	
     }
     
@@ -388,49 +700,47 @@ public class AdminProfile extends javax.swing.JFrame {
     	int index = jList1.getSelectedIndex();
     	String eventType;
     	String eventDate;
-    	String[] create = new String[jList1.getModel().getSize()];
-    	for(int i = 0; i<jList1.getModel().getSize();i++)
-    		create[i]= jList1.getModel().getElementAt(i);
     	eventType = JOptionPane.showInputDialog("Enter Event Type.");
-    	eventDate = JOptionPane.showInputDialog("Enter Event Date.\n"+"MMDDYYYY");
-    	create[index] = eventType+eventDate;
+    	eventDate = JOptionPane.showInputDialog("Enter Event Date.\n"+"YYYY/MM/DD");
     	try{
     		Database event = new Database();
     		event.deleteEventList(jList1.getSelectedValue());
-    		event.writeEventList(eventType+eventDate);
-    	}
-    	catch(IOException e){
-    		
-    	}
-    	jList1.setModel(new javax.swing.AbstractListModel<String>() {
-    		public int getSize() { return create.length; }
-    		public String getElementAt(int i) { return create[i]; }
-    		});    	
+    		event.writeEventList(eventType+" "+eventDate);        	
+    		String[] strings = new String[event.readEventList().size()];
+    		for(int i =0;i<strings.length;i++){
+    			strings[i] = event.readEventList().get(i);
+    		}
+        	jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        		public int getSize() { return strings.length; }
+        		public String getElementAt(int i) { return strings[i]; }
+        		});
+        }
+        catch(IOException e){
+        	
+        } 	
     	
     }
     
     private void adminEventCreateActionPerformed(java.awt.event.ActionEvent evt) {
     	String eventType;
     	String eventDate;
-    	String[] create = new String[jList1.getModel().getSize()+1];
-    	for(int i = 0; i<jList1.getModel().getSize();i++)
-    		create[i]= jList1.getModel().getElementAt(i);
     	eventType = JOptionPane.showInputDialog("Enter Event Type.");
-    	eventDate = JOptionPane.showInputDialog("Enter Event Date.\n"+"MMDDYYYY");
-    	create[jList1.getModel().getSize()] = eventType+eventDate;
-    	jList1.setModel(new javax.swing.AbstractListModel<String>() {
-    		public int getSize() { return create.length; }
-    		public String getElementAt(int i) { return create[i]; }
-    		});
+    	eventDate = JOptionPane.showInputDialog("Enter Event Date.\n"+"YYYY/MM/DD");
     	try{
-    		String eventformal=eventType+eventDate;
     		Database newevent = new Database();
-    		newevent.writeEventList(eventformal);
-    	}
-    	catch(IOException e){
-    		
-    	}
-    	
+    		newevent.writeEventList(eventType+" "+eventDate);
+    		String[] strings = new String[newevent.readEventList().size()];
+    		for(int i =0;i<strings.length;i++){
+    			strings[i] = newevent.readEventList().get(i);
+    		}
+        	jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        		public int getSize() { return strings.length; }
+        		public String getElementAt(int i) { return strings[i]; }
+        		});
+        }
+        catch(IOException e){
+        	
+        } 	
     }
     
     private void adminEventStartActionPerformed(java.awt.event.ActionEvent evt) {
@@ -560,35 +870,35 @@ public class AdminProfile extends javax.swing.JFrame {
         });
     }
 
-    private javax.swing.JButton adminEventDelete;
     private javax.swing.JButton adminEventCreate;
-    private javax.swing.JButton adminEventEnd;
-    private javax.swing.JButton adminEventStart;
+    private javax.swing.JButton adminEventDelete;
     private javax.swing.JButton adminEventEdit;
+    private javax.swing.JButton adminEventEnd;
     private javax.swing.JLabel adminEventHeader;
     private javax.swing.JScrollPane adminEventList;
     private javax.swing.JPanel adminEventPanel;
+    private javax.swing.JButton adminEventStart;
     private javax.swing.JLabel adminHeader;
     private javax.swing.JComboBox<String> adminStatAgeMenu;
-    private javax.swing.JCheckBox adminStatAverage;
-    private javax.swing.JCheckBox adminStatBest;
+    private javax.swing.JButton adminStatAttendance;
     private javax.swing.JLabel adminStatData;
     private javax.swing.JLabel adminStatEvent;
     private javax.swing.JComboBox<String> adminStatEventMenu;
     private javax.swing.JButton adminStatGenerate;
     private javax.swing.JLabel adminStatHeader;
     private javax.swing.JPanel adminStatPanel;
-    private javax.swing.JCheckBox adminStatPopular;
+    private javax.swing.JButton adminStatPopularDay;
+    private javax.swing.JButton adminStatPopularEvent;
     private javax.swing.JLabel adminStatReport;
     private javax.swing.JTabbedPane adminTabPanel;
+    private javax.swing.JButton adminUserData;
     private javax.swing.JScrollPane adminUserNameList;
     private javax.swing.JPanel adminUserPanel;
+    private javax.swing.JButton adminUserPermissions;
     private javax.swing.JLabel adminUserSearch;
     private javax.swing.JTextField adminUserSearchField;
     private javax.swing.JList<String> jList1;
     private javax.swing.JList<String> jList2;
-    private javax.swing.JButton adminUserPermissions;
-    private javax.swing.JButton adminUserData;
 
     
     // End of variables declaration//GEN-END:variables
