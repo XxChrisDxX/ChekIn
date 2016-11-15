@@ -1,6 +1,11 @@
 import java.awt.List;
 import java.util.*;
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -120,7 +125,73 @@ public class Database {
 		input.close();
 		return users;
 	}
-
+	
+	public ArrayList<String> readEventStats() throws IOException{
+		FileReader file = new FileReader("database.dat");
+		BufferedReader input = new BufferedReader(file);
+		String dob;
+		String event;
+		String eventname;
+		String eventdate;
+		String age;
+		int index;
+		int limit;
+		ArrayList<String> events = new ArrayList<String>();
+		input.readLine();
+		while((line = input.readLine()) != null){
+			index = line.indexOf(',');
+			limit = line.lastIndexOf(',');				
+			dob = line.substring(line.lastIndexOf(':')+1, line.indexOf('%'));
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+			LocalDate dobDate = LocalDate.parse(dob,formatter);
+			age = Integer.toString(Period.between(dobDate, LocalDate.now()).getYears());
+			while(index!=limit){
+				event = line.substring(index+1, line.indexOf(',', index+1));
+				eventdate = event.substring(event.indexOf(' ')+1, event.length());
+				eventname = event.substring(0, event.indexOf(' '));
+				events.add(eventname);
+				events.add(eventdate);
+				events.add(age);
+				index = line.indexOf(',', index+1);
+			}
+			event = (line.substring(limit+1, line.indexOf(']')));
+			eventdate = event.substring(event.indexOf(' ')+1, event.length());
+			eventname = event.substring(0, event.indexOf(' '));
+			events.add(eventname);
+			events.add(eventdate);
+			events.add(age);
+		}
+		file.close();
+		input.close();
+		return events;
+	}	
+	
+	
+	public ArrayList<String> readEventAll() throws IOException{
+		FileReader file = new FileReader("database.dat");
+		BufferedReader input = new BufferedReader(file);
+		String event;
+		String eventname;
+		int index;
+		int limit;
+		ArrayList<String> events = new ArrayList<String>();
+		input.readLine();
+		while((line = input.readLine()) != null){
+			index = line.indexOf(',');
+			limit = line.lastIndexOf(',');
+			while(index!=limit){
+				event = line.substring(index+1, line.indexOf(',', index+1));
+				eventname = event.substring(0, event.indexOf(' '));
+				events.add(eventname);
+				index = line.indexOf(',', index+1);
+			}
+			events.add(line.substring(limit+1, line.indexOf(' ',limit+1)));			
+		}
+		file.close();
+		input.close();
+		return events;
+	}	
+	
 	public ArrayList<String> readEvent(String data) throws IOException{
 		FileReader file = new FileReader("database.dat");
 		BufferedReader input = new BufferedReader(file);
