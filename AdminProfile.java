@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.awt.*;
 
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -47,6 +48,8 @@ public class AdminProfile extends javax.swing.JFrame {
         jList2 = new javax.swing.JList<>();
         adminUserPermissions = new javax.swing.JButton();
         adminUserData = new javax.swing.JButton();
+        adminUserInvite = new javax.swing.JButton();
+        adminUserNotify = new javax.swing.JButton();
         adminEventPanel = new javax.swing.JPanel();
         adminEventHeader = new javax.swing.JLabel();
         adminEventList = new javax.swing.JScrollPane();
@@ -92,6 +95,22 @@ public class AdminProfile extends javax.swing.JFrame {
             }
         });   
         
+        adminUserNotify.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminUserNotifyActionPerformed(evt);
+            }
+        });   
+        
+        adminUserInvite.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminUserInviteActionPerformed(evt);
+            }
+        });   
+        
+        adminUserInvite.setText("Send Event Invite");
+
+        adminUserNotify.setText("Send Notification");
+
         javax.swing.GroupLayout adminUserPanelLayout = new javax.swing.GroupLayout(adminUserPanel);
         adminUserPanel.setLayout(adminUserPanelLayout);
         adminUserPanelLayout.setHorizontalGroup(
@@ -105,9 +124,11 @@ public class AdminProfile extends javax.swing.JFrame {
                         .addComponent(adminUserSearchField))
                     .addComponent(adminUserNameList, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(adminUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(adminUserPermissions)
-                    .addComponent(adminUserData, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(adminUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(adminUserPermissions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(adminUserData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(adminUserInvite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(adminUserNotify, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         adminUserPanelLayout.setVerticalGroup(
@@ -119,11 +140,15 @@ public class AdminProfile extends javax.swing.JFrame {
                     .addComponent(adminUserSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(adminUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(adminUserNameList, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
+                    .addComponent(adminUserNameList, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
                     .addGroup(adminUserPanelLayout.createSequentialGroup()
                         .addComponent(adminUserPermissions)
                         .addGap(18, 18, 18)
                         .addComponent(adminUserData)
+                        .addGap(18, 18, 18)
+                        .addComponent(adminUserInvite)
+                        .addGap(18, 18, 18)
+                        .addComponent(adminUserNotify)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -397,6 +422,38 @@ public class AdminProfile extends javax.swing.JFrame {
         
     }
 
+
+    private void adminUserInviteActionPerformed(java.awt.event.ActionEvent evt) {
+    
+    	//HI IM WHERE EMAIL CODE IS USED TO SEND A MESSAGE TO A USER. LIKE HERRO SIRE YOUVE BEEN INVITED TO EVENT!@!@!
+    	//name = jList2.getSelectedValue(); will be youre friend when seeing what name is selected.
+    	//try{Database hello = new Database(); hello.readEmail(name); } catch(IOException......){} will also be your friend
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    }
+    
+    private void adminUserNotifyActionPerformed(java.awt.event.ActionEvent evt) {
+    	
+    	//HI IM WHERE EMAIL CODE IS USED TO SEND A MESSAGE TO A USER. LIKE YOU SIR HAVENT SHOWED UP TO ANY EVENT...GTFO
+    	//name = jList2.getSelectedValue(); will be youre friend when seeing what name is selected.
+    	//try{Database hello = new Database(); hello.readEmail(name); } catch(IOException......){} will also be your friend
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    }
+    
+    
+    //when the generate button is clicked it pulls the two selected values from data type and event type
     private void adminStatGenerateActionPerformed(java.awt.event.ActionEvent evt) {
     	
 		try{
@@ -409,11 +466,11 @@ public class AdminProfile extends javax.swing.JFrame {
 		
 			for(int j = 0;j<eventstats.readEventStats().size();j++){
 				if(j%3 == 0)
-					name.add(eventstats.readEventStats().get(j));
+					name.add(eventstats.readEventStats().get(j));//list of all names of events in database
 				if(j%3 == 1)
-					date.add(eventstats.readEventStats().get(j));
+					date.add(eventstats.readEventStats().get(j));//list of all dates of events in database
 				if(j%3 == 2)
-					age.add(eventstats.readEventStats().get(j));
+					age.add(eventstats.readEventStats().get(j));//list of all ages of events in database
 			}
 			ArrayList<String> tempname = new ArrayList<String>();
 			ArrayList<String> tempdate = new ArrayList<String>();  		
@@ -421,20 +478,19 @@ public class AdminProfile extends javax.swing.JFrame {
 
 			for(int j = 0;j<name.size();j++){
 				if(selection.equals(name.get(j))){
-					tempname.add(name.get(j));
-					tempdate.add(date.get(j));
-					tempage.add(age.get(j));
+					tempname.add(name.get(j));//list of all names of events that match the event type of selected value in pulldown
+					tempdate.add(date.get(j));//list of dates that match the event type of selected value in event type
+					tempage.add(age.get(j));//^^ ditto
 				}  			
 			}
-			
+			//makes bar graph of the attendance of a event type selected on various days of week
 			if(dataselection.equals("Day of Week")){
 				//day of week popularity of attendance
 				String[] dayarr = {"SUNDAY","MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY"}; //display for axes
-				double[][] daydata = new double[2][7];
+				double[][] daydata = new double[2][7];//array that holds values for graph. [0][i]=attendance [1][i] = avg age of attendance
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 				int count = 0;
 				//if data type selected is day and event type is selected <selection>
-				//else does string i : date for all types of events most popular dayofweek <button>
 				for(String i:tempdate){
 					LocalDate eventDay = LocalDate.parse(i,formatter);
 					if(eventDay.getDayOfWeek().name().equals(dayarr[0])){
@@ -474,13 +530,15 @@ public class AdminProfile extends javax.swing.JFrame {
 				}
 			}
 			
-			
+			//if event type selected and age selected then we do a line graph showing distribution of ages for this event type
+			//y axis = # of this type of age 
+			//x axis = age
 			else if(dataselection.equals("Age")){
 				//age range
 				//datatype + age = line graph <selection>
 				Set<String> agelisting = new TreeSet<String>(tempage);
 				double[] agedata = new double[agelisting.size()];//holds number of certain age
-				String[] agename = agelisting.toArray(new String[0]);//display for axes
+				String[] agename = agelisting.toArray(new String[0]);//display for axes of ages in database in order
 				int count = 0;
 				for(String t:agelisting){
 					for(int i = 0;i<tempage.size();i++){
@@ -491,17 +549,19 @@ public class AdminProfile extends javax.swing.JFrame {
 					count++;
 				}
 				for(int i = 0;i<agelisting.size();i++){
-					System.out.println(agename[i]+": "+agedata[i]);
+					System.out.println(agename[i]+": "+agedata[i]); //agename = what the age is, agedata is how many of that age
 				}
 			}
 	
-			
+			//if event type selected and data is attendance then we make bar graph
+			//attendance on y axis
+			//x axis is dates of this certain event already in order
 			else if(dataselection.equals("Attendance")){
 				//attendance for an event type type+attendance <selection>
 				//splits event type by date and attendance on that date
 				Set<String> datelisting = new TreeSet<String>(tempdate);
-				double[][] data = new double[2][datelisting.size()];
-				String[] datename = datelisting.toArray(new String[0]);//display for axes
+				double[][] data = new double[2][datelisting.size()];//holds attendance in [0][i] and avg age in [1][i]
+				String[] datename = datelisting.toArray(new String[0]);//display of dates as string for x axis
 				int count = 0;
 				for(String t:datelisting){
 					data[0][count] = Collections.frequency(tempdate,t);
@@ -526,6 +586,10 @@ public class AdminProfile extends javax.swing.JFrame {
 		}    	
     }
     
+    //clicked on attendance of all button w/ no selection necessary
+    //shows attendance of each event type as a whole disregarding date and also shows avg age respectively
+    //should be a bar graph with x axis being event type stored in namearray and attendance y axis stored in
+    //namedata[0][i] with avg age in namedata[1][i]
     private void adminStatAttendanceActionPerformed(java.awt.event.ActionEvent evt) {
     	
     	try{
@@ -569,6 +633,9 @@ public class AdminProfile extends javax.swing.JFrame {
     	}
     }
 
+    //shows attendance for each day of week including all event types no selection necessary.
+    //bar graph with day of week x axis held in dayarr
+    //y axis is attendance held in daydata[0][i] and avg age held in blah blah blah...getting redundant
     private void adminStatPopularDayActionPerformed(java.awt.event.ActionEvent evt) {
     	try{
     		Database eventpopular = new Database();
@@ -635,7 +702,8 @@ public class AdminProfile extends javax.swing.JFrame {
     	}
     }
     
-    
+    //shows the most popular event to date with no selection necessary. simply prints the event type and its date of occurance.
+    //the displaying of this is up to whoever. click it to see whats stored in what....
     private void adminStatPopularEventActionPerformed(java.awt.event.ActionEvent evt) {
 		
     	try{
@@ -897,6 +965,8 @@ public class AdminProfile extends javax.swing.JFrame {
     private javax.swing.JButton adminUserPermissions;
     private javax.swing.JLabel adminUserSearch;
     private javax.swing.JTextField adminUserSearchField;
+    private javax.swing.JButton adminUserNotify;
+    private javax.swing.JButton adminUserInvite;
     private javax.swing.JList<String> jList1;
     private javax.swing.JList<String> jList2;
 

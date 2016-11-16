@@ -31,6 +31,7 @@ public class UserProfile extends javax.swing.JFrame {
         userEmail = new javax.swing.JLabel();
         userEmailField = new javax.swing.JTextField();
         userUpdate = new javax.swing.JButton();
+        userFeedback = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -40,14 +41,21 @@ public class UserProfile extends javax.swing.JFrame {
         userEmail.setText("New E-Mail");
 
         userUpdate.setText("Update");
+
+        userFeedback.setText("Send Feedback");
+
         userUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 userUpdateActionPerformed(evt);
             }
-        });
+        });   
         
+        userFeedback.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userFeedbackActionPerformed(evt);
+            }
+        });   
         
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -59,7 +67,8 @@ public class UserProfile extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(userHeader)
                     .addComponent(userEmailField, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(userUpdate))
+                    .addComponent(userUpdate)
+                    .addComponent(userFeedback))
                 .addContainerGap(124, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -73,8 +82,11 @@ public class UserProfile extends javax.swing.JFrame {
                     .addComponent(userEmailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(43, 43, 43)
                 .addComponent(userUpdate)
-                .addContainerGap(130, Short.MAX_VALUE))
+                .addGap(41, 41, 41)
+                .addComponent(userFeedback)
+                .addContainerGap(65, Short.MAX_VALUE))
         );
+
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -90,6 +102,18 @@ public class UserProfile extends javax.swing.JFrame {
     	catch(IOException e){
     		
     	}
+    	
+    }
+
+    
+    
+    private void userFeedbackActionPerformed(java.awt.event.ActionEvent evt) {
+
+    	//HI IM WHERE USER WOULD LIKE TO SEND FEEDBACK TO ADMIN.
+    	//SINCE THIS USER IS LOGGED IN THEIR NAME IS STORED UNDER....NAME VARIABLE ALREADY FOR SIGNING WHERE EMAIL HAS BEEN SENT FROM.
+    	//NO NEED TO STORE EMAILS LOCALLY JUST HAVE THEM STORED IN EMAIL ACCT.
+    	//AS FAR AS RSVP I DUNNO. IT WOULD HAVE TO BE SEPERATE FROM EMAIL. MAYBE A BUTTON ON USER PROFILE...BUT THEN THEY WOULD HAVE TO HAVE A LIST OF EVENTS IN USER PROFILE....DOABLE YES....
+    	
     	
     }
     
@@ -130,6 +154,7 @@ public class UserProfile extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel userEmail;
+    private javax.swing.JButton userFeedback;
     private javax.swing.JTextField userEmailField;
     private javax.swing.JLabel userHeader;
     private javax.swing.JButton userUpdate;
