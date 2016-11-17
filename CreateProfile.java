@@ -61,7 +61,7 @@ public class CreateProfile extends javax.swing.JFrame {
 
         createDOB.setText("Birth Date");
 
-        createBirthExample.setText("mm/dd/yyyy");
+        createBirthExample.setText("yyyy/mm/dd");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
