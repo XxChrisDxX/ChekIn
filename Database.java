@@ -60,6 +60,7 @@ public class Database {
 		}
 		input.close();
 		out.close();
+		main.delete();
 		boolean successful = temp.renameTo(main);
 	}
 	
@@ -79,6 +80,7 @@ public class Database {
 		}
 		input.close();
 		out.close();
+		main.delete();
 		boolean successful = temp.renameTo(main);
 		
 	}
@@ -342,7 +344,8 @@ public class Database {
 		}
 		input.close();
 		out.close();
-		boolean successful = temp.renameTo(main);
+		main.delete();
+		temp.renameTo(main);
 	}
 
 	public void writeEmail(String data, String email) throws IOException{
@@ -369,6 +372,7 @@ public class Database {
 		}
 		input.close();
 		out.close();
+		main.delete();
 		boolean successful = temp.renameTo(main);
 	}
 	
@@ -397,6 +401,7 @@ public class Database {
 		}
 		input.close();
 		out.close();
+		main.delete();
 		boolean successful = temp.renameTo(main);
 	}
 
