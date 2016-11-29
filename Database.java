@@ -345,7 +345,7 @@ public class Database {
 		input.close();
 		out.close();
 		main.delete();
-		temp.renameTo(main);
+		boolean successful = temp.renameTo(main);
 	}
 
 	public void writeEmail(String data, String email) throws IOException{
