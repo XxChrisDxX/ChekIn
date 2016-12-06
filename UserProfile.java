@@ -242,7 +242,10 @@ public class UserProfile extends javax.swing.JFrame {
 
 	private void userRSVPActionPerformed(java.awt.event.ActionEvent evt) {
 		String event = jList1.getSelectedValue();
-		System.out.println("Youre RSVP FOR DIS EVENT ?!@?!@?!@?!?@: " + event);
+		JOptionPane.showMessageDialog(null,
+				"You are now RSVP'd for this event: " + event,
+				"Success!",
+				JOptionPane.INFORMATION_MESSAGE);
 
 		try {
 			Database valid = new Database();
@@ -253,7 +256,10 @@ public class UserProfile extends javax.swing.JFrame {
 	        									// if not logged in then no event
 										   		// recorded.
 	        } else {
-	        	System.out.println("You already did RSVP for this event: " + event);
+	        	JOptionPane.showMessageDialog(null,
+	    				"You already RSVP'd for this event.",
+	    				"Notice",
+	    				JOptionPane.INFORMATION_MESSAGE);
 	        }
 		} catch (IOException e) {
 
