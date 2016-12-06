@@ -191,6 +191,7 @@ public class Database {
 				events.add(eventname);
 				index = line.indexOf(',', index + 1);
 			}
+			if(limit !=-1 || index != -1)
 			events.add(line.substring(limit + 1, line.indexOf(' ', limit + 1)));
 		}
 		file.close();
