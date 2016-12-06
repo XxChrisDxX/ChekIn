@@ -175,7 +175,7 @@ public class Database {
 	public ArrayList<String> readEventAll() throws IOException {
 		FileReader file = new FileReader("database.dat");
 		BufferedReader input = new BufferedReader(file);
-		String event;
+		String event; 
 		String eventname;
 		int index;
 		int limit;
@@ -190,6 +190,7 @@ public class Database {
 				events.add(eventname);
 				index = line.indexOf(',', index + 1);
 			}
+			if(limit != -1 || index != -1)
 			events.add(line.substring(limit + 1, line.indexOf(' ', limit + 1)));
 		}
 		file.close();
