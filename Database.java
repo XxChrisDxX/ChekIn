@@ -128,22 +128,13 @@ public class Database {
 					int beg = 0;
 					int end = 0;
 					if(user.equalsIgnoreCase(name)){
-						for(int i2 = istart; i2<length; i2++){
-							if(line.charAt(i2)=='['){
-								beg = i2;
-							}
-							if(line.charAt(i2)==']'){
-								end = i2;
-							}
-							if(end != 0 && beg != 0){
-								event = line.substring(beg, end);
-							}
-							if(user.equalsIgnoreCase(name) && event.contains(attend)){
-								file.close();
-								input.close();
-								return false;
-							}
+						event = line.substring(line.indexOf(‘[‘), line.indexOf(‘]’));
+						if(user.equalsIgnoreCase(name) && event.contains(attend)){
+							file.close();
+							input.close();
+							return false;
 						}
+					
 					}else
 						break;
 				}
