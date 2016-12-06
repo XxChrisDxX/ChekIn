@@ -1164,14 +1164,15 @@ public class AdminProfile extends javax.swing.JFrame {
 		name = jList2.getSelectedValue();
 		try {
 			Database info = new Database();
-			String[] strings = new String[info.readEvent(name).size() + 5];
+			String[] strings = new String[info.readEvent(name).size() + 6];
 			strings[0] = name;
 			strings[1] = "Email: " + info.readEmail(name);
 			strings[2] = "DOB: " + info.readBirth(name);
-			strings[3] = "Events Attended:";
-			strings[4] = "";
+			strings[3] = "Phone:" + info.readPhone(name);
+			strings[4] = "Events Attended:";
+			strings[5] = "";
 			int index = 0;
-			for (int i = 5; i < strings.length; i++) {
+			for (int i = 6; i < strings.length; i++) {
 				strings[i] = info.readEvent(name).get(index);
 				index++;
 			}
