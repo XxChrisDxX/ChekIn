@@ -63,8 +63,7 @@ public class SwingEmailSender extends JFrame {
         setupForm();
          
         pack();
-        setLocationRelativeTo(null);    // center on screen
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);    
+        setLocationRelativeTo(null);    // center on screen   
     }
    
     private ConfigUtility configUtil = new ConfigUtility(uHost, uEmail, uPassword);
