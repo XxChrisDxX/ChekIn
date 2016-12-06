@@ -1177,33 +1177,34 @@ public class AdminProfile extends javax.swing.JFrame {
 	private void adminEventEditActionPerformed(java.awt.event.ActionEvent evt) {
 		int index = jList1.getSelectedIndex();
 		String eventType;
-		String eventDate;
+		String eventDate = null;
 		eventType = JOptionPane.showInputDialog("Enter Event Type.");
-		eventDate = JOptionPane.showInputDialog("Enter Event Date.\n"
-				+ "YYYY/MM/DD");
-		try {
-			Database event = new Database();
-			event.deleteEventList(jList1.getSelectedValue());
-			event.writeEventList(eventType + " " + eventDate);
-			String[] strings = new String[event.readEventList().size()];
-			for (int i = 0; i < strings.length; i++) {
-				strings[i] = event.readEventList().get(i);
-			}
-			jList1.setModel(new javax.swing.AbstractListModel<String>() {
-				public int getSize() {
-					return strings.length;
-				}
-
-				public String getElementAt(int i) {
-					return strings[i];
-				}
-			});
-		} catch (IOException e) {
-
-		} catch (NullPointerException e) {
-			
+		if(eventType!=null){
+			eventDate = JOptionPane.showInputDialog("Enter Event Date.\n"
+					+ "YYYY/MM/DD");
 		}
-
+		if(eventType!=null && eventDate!=null){
+			try {
+				Database event = new Database();
+				event.deleteEventList(jList1.getSelectedValue());
+				event.writeEventList(eventType + " " + eventDate);
+				String[] strings = new String[event.readEventList().size()];
+				for (int i = 0; i < strings.length; i++) {
+					strings[i] = event.readEventList().get(i);
+				}
+				jList1.setModel(new javax.swing.AbstractListModel<String>() {
+					public int getSize() {
+						return strings.length;
+					}
+	
+					public String getElementAt(int i) {
+						return strings[i];
+					}
+				});
+			} catch (IOException e) {
+	
+			}
+		}
 	}
 
 	private void adminEventCreateActionPerformed(
