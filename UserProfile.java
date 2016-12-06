@@ -1,4 +1,9 @@
+import java.io.File;
 import java.io.IOException;
+
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -13,6 +18,7 @@ import java.io.IOException;
 public class UserProfile extends javax.swing.JFrame {
 
 	private String name;
+	private String uHost, uEmail, uPassword;
 
 	public UserProfile(String fromLogin) {
 		name = fromLogin;
@@ -236,14 +242,25 @@ public class UserProfile extends javax.swing.JFrame {
 
 	private void userRSVPActionPerformed(java.awt.event.ActionEvent evt) {
 		String event = jList1.getSelectedValue();
-		System.out.println("Youre RSVP FOR DIS EVENT ?!@?!@?!@?!?@: " + event);
+		JOptionPane.showMessageDialog(null,
+				"You are now RSVP'd for this event: " + event,
+				"Success!",
+				JOptionPane.INFORMATION_MESSAGE);
 
 		try {
 			Database valid = new Database();
-			valid.writeEvent(name, event); // writes that the user attended/will
-										   // attend event.
-										   // if not logged in then no event
-										   // recorded.
+	        
+	        if(valid.attendEvent(name, event)){
+	        	valid.writeEvent(name, event); 	// writes that the user attended/will
+	        									// attend event.
+	        									// if not logged in then no event
+										   		// recorded.
+	        } else {
+	        	JOptionPane.showMessageDialog(null,
+	    				"You already RSVP'd for this event.",
+	    				"Notice",
+	    				JOptionPane.INFORMATION_MESSAGE);
+	        }
 		} catch (IOException e) {
 
 		}
@@ -259,6 +276,45 @@ public class UserProfile extends javax.swing.JFrame {
 		// AS FAR AS RSVP I DUNNO. IT WOULD HAVE TO BE SEPERATE FROM EMAIL.
 		// MAYBE A BUTTON ON USER PROFILE...BUT THEN THEY WOULD HAVE TO HAVE A
 		// LIST OF EVENTS IN USER PROFILE....DOABLE YES....
+		try {
+			Database valid = new Database();
+	        
+			uEmail = valid.readEmail(name);
+			String line = uEmail;
+			int length = line.length();
+			int beg = 0;
+			
+			for(int i = 0; i<length;i++){
+				if(line.charAt(i)=='@'){
+					beg = i;
+				}
+				if(beg != 0){
+					uHost = "smtp." + line.substring(beg+1, length);
+					break;
+				}
+			}
+		} catch (IOException e) {
+
+		}
+		uPassword = JOptionPane.showInputDialog("Enter password for email address.");				
+		try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+         
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+            	File properties = new File("smtp.properties");
+            	properties.delete();
+                new SwingEmailSender(uHost, uEmail, uPassword).setVisible(true);
+            }
+        });
+		//new SwingEmailSender(uHost, uEmail, uPassword).setVisible(true);
+		
+		
+        setVisible(false);
 
 	}
 
