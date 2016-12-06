@@ -10,6 +10,8 @@
  */
 import java.io.*;
 
+import javax.swing.JOptionPane;
+
 public class CheckinScreen extends javax.swing.JFrame {
 
 	
@@ -206,7 +208,10 @@ public class CheckinScreen extends javax.swing.JFrame {
             event = AdminProfile.getEvent();
             if(event.isEmpty())
             {
-            	System.out.println("There should be a warning here....");
+            	JOptionPane.showMessageDialog(null,
+    					"No event has been selected.",
+    					"Oops!",
+    					JOptionPane.ERROR_MESSAGE);
             }
             else{
             	if(valid.attendEvent(name, event)){
@@ -214,7 +219,10 @@ public class CheckinScreen extends javax.swing.JFrame {
             		jDialog1.setVisible(true);
             	}
             	else{
-            		System.out.println("You have already signed in to this event: " + event + ".");
+            		JOptionPane.showMessageDialog(null,
+            				"You have already signed in to this event: " + event + ".",
+            				"Notice",
+            				JOptionPane.INFORMATION_MESSAGE);
             	} 
             }
         }
