@@ -128,7 +128,7 @@ public class Database {
 					int beg = 0;
 					int end = 0;
 					if(user.equalsIgnoreCase(name)){
-						event = line.substring(line.indexOf(‘[‘), line.indexOf(‘]’));
+						event = line.substring(line.indexOf('['), line.indexOf(']'));
 						if(user.equalsIgnoreCase(name) && event.contains(attend)){
 							file.close();
 							input.close();
