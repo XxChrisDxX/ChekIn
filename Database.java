@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 public class Database {
@@ -65,7 +66,7 @@ public class Database {
 		boolean successful = temp.renameTo(main);
 	}
 
-	public void deleteEventList(String event) throws IOException {
+	public void deleteEventList(String event) throws IOException, NullPointerException{
 		StringBuilder add = new StringBuilder(150);
 		File main = new File("database.dat");
 		File temp = new File("temp.dat");
@@ -129,7 +130,7 @@ public class Database {
 		return users;
 	}
 
-	public ArrayList<String> readEventStats() throws IOException {
+	public ArrayList<String> readEventStats() throws IOException, DateTimeParseException {
 		FileReader file = new FileReader("database.dat");
 		BufferedReader input = new BufferedReader(file);
 		String dob;
@@ -225,7 +226,7 @@ public class Database {
 		return events;
 	}
 
-	public boolean readPermissions(String data) throws IOException {
+	public boolean readPermissions(String data) throws IOException, NullPointerException {
 		FileReader file = new FileReader("database.dat");
 		BufferedReader input = new BufferedReader(file);
 		String name = "";
@@ -318,7 +319,7 @@ public class Database {
 		boolean successful = temp.renameTo(main);
 	}
 
-	public String readEmail(String data) throws IOException {
+	public String readEmail(String data) throws IOException, NullPointerException {
 		FileReader file = new FileReader("database.dat");
 		BufferedReader input = new BufferedReader(file);
 		String name = "";
