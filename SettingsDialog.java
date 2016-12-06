@@ -21,6 +21,8 @@ import javax.swing.JTextField;
 @SuppressWarnings("serial")
 public class SettingsDialog extends JDialog {
  
+	private String uHost, uEmail, uPassword; 
+	
     private ConfigUtility configUtil;
      
     private JLabel labelHost = new JLabel("Host name: ");
@@ -35,10 +37,14 @@ public class SettingsDialog extends JDialog {
      
     private JButton buttonSave = new JButton("Save");
      
-    public SettingsDialog(JFrame parent, ConfigUtility configUtil) {
+    public SettingsDialog(JFrame parent, ConfigUtility configUtil, String uHost, String uEmail, String uPassword) {
         super(parent, "SMTP Settings", true);
         this.configUtil = configUtil;
          
+        this.uHost = uHost;
+        this.uEmail = uEmail;
+        this.uPassword = uPassword;
+        
         setupForm();
          
         loadSettings();
@@ -98,7 +104,7 @@ public class SettingsDialog extends JDialog {
     private void loadSettings() {
         Properties configProps = null;
         try {
-            configProps = configUtil.loadProperties();
+            configProps = configUtil.loadProperties(uHost, uEmail, uPassword);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this,
                     "Error reading settings: " + ex.getMessage(),

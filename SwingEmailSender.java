@@ -27,8 +27,8 @@ import javax.swing.UIManager;
  */
 @SuppressWarnings("serial")
 public class SwingEmailSender extends JFrame {
-    private ConfigUtility configUtil = new ConfigUtility();
-     
+    private String uHost, uEmail, uPassword; 
+	
     private JMenuBar menuBar = new JMenuBar();
     private JMenu menuFile = new JMenu("File");
     private JMenuItem menuItemSetting = new JMenuItem("Settings..");
@@ -47,9 +47,13 @@ public class SwingEmailSender extends JFrame {
      
     private GridBagConstraints constraints = new GridBagConstraints();
      
-    public SwingEmailSender() {
-        super("Swing E-mail Sender Program");
-         
+    public SwingEmailSender(String uHost, String uEmail, String uPassword) {
+        super("Email");
+        
+        this.uHost = uHost;
+        this.uEmail = uEmail;
+        this.uPassword = uPassword;
+
         // set up layout
         setLayout(new GridBagLayout());
         constraints.anchor = GridBagConstraints.WEST;
@@ -62,12 +66,14 @@ public class SwingEmailSender extends JFrame {
         setLocationRelativeTo(null);    // center on screen
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);    
     }
- 
+   
+    private ConfigUtility configUtil = new ConfigUtility(uHost, uEmail, uPassword);
+    
     private void setupMenu() {
         menuItemSetting.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                SettingsDialog dialog = new SettingsDialog(SwingEmailSender.this, configUtil);
+                SettingsDialog dialog = new SettingsDialog(SwingEmailSender.this, configUtil, uHost, uEmail, uPassword);
                 dialog.setVisible(true);
             }
         });
@@ -139,7 +145,7 @@ public class SwingEmailSender extends JFrame {
         }
          
         try {
-            Properties smtpProperties = configUtil.loadProperties();
+            Properties smtpProperties = configUtil.loadProperties(uHost, uEmail, uPassword);
             EmailUtility.sendEmail(smtpProperties, toAddress, subject, message, attachFiles);
              
             JOptionPane.showMessageDialog(this,
@@ -180,7 +186,7 @@ public class SwingEmailSender extends JFrame {
         return true;
     }
      
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         // set look and feel to system dependent
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -191,8 +197,8 @@ public class SwingEmailSender extends JFrame {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new SwingEmailSender().setVisible(true);
+                new SwingEmailSender(uHost, uEmail, uPassword).setVisible(true);
             }
         });
-    }
+    }*/
 }

@@ -209,8 +209,13 @@ public class CheckinScreen extends javax.swing.JFrame {
             	System.out.println("There should be a warning here....");
             }
             else{
-            	jDialog1.setVisible(true);
-            	valid.writeEvent(name, event); 
+            	if(valid.attendEvent(name, event)){
+            		valid.writeEvent(name, event);
+            		jDialog1.setVisible(true);
+            	}
+            	else{
+            		System.out.println("You have already signed in to this event: " + event + ".");
+            	} 
             }
         }
         else{

@@ -14,14 +14,21 @@ import java.util.Properties;
 public class ConfigUtility {
     private File configFile = new File("smtp.properties");
     private Properties configProps;
-     
-    public Properties loadProperties() throws IOException {
+    private String uHost, uEmail, uPassword; 
+    
+    public ConfigUtility(String uHost, String uEmail, String uPassword){
+    	this.uHost = uHost;
+    	this.uEmail = uEmail;
+    	this.uPassword = uPassword;
+    }
+    
+    public Properties loadProperties(String uHost, String uEmail, String uPassword) throws IOException {
         Properties defaultProps = new Properties();
-        // sets default properties
-        defaultProps.setProperty("mail.smtp.host", "smtp.gmail.com");
+        // sets default properties "smtp.gmail.com" "tom@gmail.com" "secret"
+        defaultProps.setProperty("mail.smtp.host", uHost);
         defaultProps.setProperty("mail.smtp.port", "587");
-        defaultProps.setProperty("mail.user", "tom@gmail.com");
-        defaultProps.setProperty("mail.password", "secret");
+        defaultProps.setProperty("mail.user", uEmail);
+        defaultProps.setProperty("mail.password", uPassword);
         defaultProps.setProperty("mail.smtp.starttls.enable", "true");
         defaultProps.setProperty("mail.smtp.auth", "true");
          
@@ -32,6 +39,10 @@ public class ConfigUtility {
             InputStream inputStream = new FileInputStream(configFile);
             configProps.load(inputStream);
             inputStream.close();
+        }else{
+        	OutputStream outputStream = new FileOutputStream(configFile);
+            configProps.store(outputStream, "host setttings");
+            outputStream.close();
         }
          
         return configProps;

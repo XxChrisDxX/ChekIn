@@ -111,6 +111,48 @@ public class Database {
 		input.close();
 		return false;
 	}
+	
+	public boolean attendEvent(String user, String attend) throws IOException{
+		FileReader file = new FileReader("database.dat");
+		BufferedReader input = new BufferedReader(file);
+		String name = "";
+		String event = "";
+		int istart = 0;
+		while((line = input.readLine()) != null){
+			int length = line.length();
+			for(int i = 0; i<length;i++){
+				if(line.charAt(i)==':'){
+					name = line.substring(0,i);
+					istart = i;
+					
+					int beg = 0;
+					int end = 0;
+					if(user.equalsIgnoreCase(name)){
+						for(int i2 = istart; i2<length; i2++){
+							if(line.charAt(i2)=='['){
+								beg = i2;
+							}
+							if(line.charAt(i2)==']'){
+								end = i2;
+							}
+							if(end != 0 && beg != 0){
+								event = line.substring(beg, end);
+							}
+							if(user.equalsIgnoreCase(name) && event.contains(attend)){
+								file.close();
+								input.close();
+								return false;
+							}
+						}
+					}else
+						break;
+				}
+			}
+		}
+		file.close();
+		input.close();
+		return true;
+	}
 
 	public ArrayList<String> findUser(String data) throws IOException {
 		FileReader file = new FileReader("database.dat");
