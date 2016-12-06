@@ -3,6 +3,7 @@ import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -893,6 +894,14 @@ public class AdminProfile extends javax.swing.JFrame {
 
 		} catch (IOException e) {
 
+		} catch (DateTimeParseException e) {
+			JOptionPane.showMessageDialog(null,
+					"The date and time data recorded "
+					+ "is in the incorrect format. Please "
+					+ "refer to database.dat and check "
+					+ "recorded dates.",
+					"Oops!",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -987,6 +996,14 @@ public class AdminProfile extends javax.swing.JFrame {
 			frame.setVisible(true);
 		} catch (IOException e) {
 
+		} catch (DateTimeParseException e) {
+			JOptionPane.showMessageDialog(null,
+					"The date and time data recorded "
+					+ "is in the incorrect format. Please "
+					+ "refer to database.dat and check "
+					+ "recorded dates.",
+					"Oops!",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -1063,6 +1080,11 @@ public class AdminProfile extends javax.swing.JFrame {
 			});
 		} catch (IOException e) {
 
+		} catch (NullPointerException e) {
+			JOptionPane.showMessageDialog(null,
+					"No event has been selected.",
+					"Oops!",
+					JOptionPane.ERROR_MESSAGE);
 		}
 
 	}
@@ -1093,6 +1115,8 @@ public class AdminProfile extends javax.swing.JFrame {
 			});
 		} catch (IOException e) {
 
+		} catch (NullPointerException e) {
+			
 		}
 
 	}
@@ -1148,15 +1172,25 @@ public class AdminProfile extends javax.swing.JFrame {
 		try {
 			Database permission = new Database();
 			if (permission.readPermissions(name)) {
-				System.out.println(
-						"this should be a dialog but now switching permissions to User");
+				JOptionPane.showMessageDialog(null,
+						"Permissions set to basic.",
+						"Success!",
+						JOptionPane.INFORMATION_MESSAGE);
 				permission.writePermissions(name, 0);
 			} else {
-				System.out.println("GOD MODE!@!@!@");
+				JOptionPane.showMessageDialog(null,
+						"Permissions set to administrator.",
+						"Success!",
+						JOptionPane.INFORMATION_MESSAGE);
 				permission.writePermissions(name, 1);
 			}
 		} catch (IOException e) {
 
+		} catch (NullPointerException e) {
+			JOptionPane.showMessageDialog(null,
+					"No user has been selected.",
+					"Oops!",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -1188,6 +1222,11 @@ public class AdminProfile extends javax.swing.JFrame {
 			});
 		} catch (IOException e) {
 
+		} catch (NullPointerException e) {
+			JOptionPane.showMessageDialog(null,
+					"No user has been selected.",
+					"Oops!",
+					JOptionPane.ERROR_MESSAGE);
 		}
 
 	}
