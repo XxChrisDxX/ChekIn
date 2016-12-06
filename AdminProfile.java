@@ -1,5 +1,6 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -12,6 +13,8 @@ import java.util.TreeSet;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 /**
  *
@@ -20,6 +23,7 @@ import javax.swing.JOptionPane;
 public class AdminProfile extends javax.swing.JFrame {
 
 	private String name;
+	private String uHost, uEmail, uPassword;
 	private static String event = "";
 
 	public AdminProfile() {
@@ -591,6 +595,46 @@ public class AdminProfile extends javax.swing.JFrame {
 		// try{Database hello = new Database(); hello.readEmail(name); }
 		// catch(IOException......){} will also be your friend
 
+		try {
+			Database valid = new Database();
+	        
+			uEmail = valid.readEmail(name);
+			String line = uEmail;
+			int length = line.length();
+			int beg = 0;
+			
+			for(int i = 0; i<length;i++){
+				if(line.charAt(i)=='@'){
+					beg = i;
+				}
+				if(beg != 0){
+					uHost = "smtp." + line.substring(beg+1, length);
+					break;
+				}
+			}
+		} catch (IOException e) {
+
+		}
+		uPassword = JOptionPane.showInputDialog("Enter password for email address.");				
+		try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+         
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+            	File properties = new File("smtp.properties");
+            	properties.delete();
+                new SwingEmailSender(uHost, uEmail, uPassword).setVisible(true);
+            }
+        });
+		//new SwingEmailSender(uHost, uEmail, uPassword).setVisible(true);
+		
+		
+        setVisible(false);
+
 	}
 
 	private void adminUserNotifyActionPerformed(
@@ -602,6 +646,46 @@ public class AdminProfile extends javax.swing.JFrame {
 		// what name is selected.
 		// try{Database hello = new Database(); hello.readEmail(name); }
 		// catch(IOException......){} will also be your friend
+
+		try {
+			Database valid = new Database();
+	        
+			uEmail = valid.readEmail(name);
+			String line = uEmail;
+			int length = line.length();
+			int beg = 0;
+			
+			for(int i = 0; i<length;i++){
+				if(line.charAt(i)=='@'){
+					beg = i;
+				}
+				if(beg != 0){
+					uHost = "smtp." + line.substring(beg+1, length);
+					break;
+				}
+			}
+		} catch (IOException e) {
+
+		}
+		uPassword = JOptionPane.showInputDialog("Enter password for email address.");				
+		try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+         
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+            	File properties = new File("smtp.properties");
+            	properties.delete();
+                new SwingEmailSender(uHost, uEmail, uPassword).setVisible(true);
+            }
+        });
+		//new SwingEmailSender(uHost, uEmail, uPassword).setVisible(true);
+		
+		
+        setVisible(false);
 
 	}
 
