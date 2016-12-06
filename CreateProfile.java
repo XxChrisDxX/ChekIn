@@ -114,43 +114,44 @@ public class CreateProfile extends javax.swing.JFrame {
                     .addComponent(createEmailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(createDOB)
-                    .addComponent(createBirthField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(createBirthExample))
+                		.addComponent(createDOB)
+                		.addComponent(createBirthField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                		.addComponent(createBirthExample))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addComponent(createSubmit)
                 .addGap(64, 64, 64))
-        );
+        		);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void createSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createSubmitActionPerformed
-        try{
-        Database create = new Database();
-        if(createFirstField.getText().isEmpty()||createLastField.getText().isEmpty()||createEmailField.getText().isEmpty()||createBirthField.getText().isEmpty())
-        {}
-        else
-        	create.writeUser(createFirstField.getText() + " " + createLastField.getText()
-        					+":"+createEmailField.getText()+":"+createBirthField.getText()+"%0"+"[]");
-        	new CheckinScreen().setVisible(true);
-        	setVisible(false);	
-        }
-        catch(IOException e){
-        }    
-    
-    
+    	try{
+    		Database create = new Database();
+    		if(createFirstField.getText().isEmpty()||createLastField.getText().isEmpty()||createEmailField.getText().isEmpty()||createBirthField.getText().isEmpty())
+    		{} else {
+
+    			create.writeUser(createFirstField.getText() + " " + createLastField.getText()
+    			+":"+createEmailField.getText()+":"+createBirthField.getText()+"%0"+"[]");
+    			new CheckinScreen().setVisible(true);
+    			setVisible(false);	
+    		}
+    	}
+    	catch(IOException e){
+    	}    
+
+
     }//GEN-LAST:event_createSubmitActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+    	/* Set the Nimbus look and feel */
+    	//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+    	/* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+    	 * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+    	 */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
