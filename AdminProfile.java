@@ -894,6 +894,14 @@ public class AdminProfile extends javax.swing.JFrame {
 
 		} catch (IOException e) {
 
+		} catch (DateTimeParseException e) {
+			JOptionPane.showMessageDialog(null,
+					"The date and time data recorded "
+					+ "is in the incorrect format. Please "
+					+ "refer to database.dat and check "
+					+ "recorded dates.",
+					"Oops!",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -989,7 +997,13 @@ public class AdminProfile extends javax.swing.JFrame {
 		} catch (IOException e) {
 
 		} catch (DateTimeParseException e) {
-			
+			JOptionPane.showMessageDialog(null,
+					"The date and time data recorded "
+					+ "is in the incorrect format. Please "
+					+ "refer to database.dat and check "
+					+ "recorded dates.",
+					"Oops!",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -1042,8 +1056,6 @@ public class AdminProfile extends javax.swing.JFrame {
 
 		} catch (IOException e) {
 
-		} catch (DateTimeParseException e) {
-			
 		}
 	}
 
@@ -1104,10 +1116,7 @@ public class AdminProfile extends javax.swing.JFrame {
 		} catch (IOException e) {
 
 		} catch (NullPointerException e) {
-			JOptionPane.showMessageDialog(null,
-					"Some information was ommitted.",
-					"Oops!",
-					JOptionPane.ERROR_MESSAGE);
+			
 		}
 
 	}
@@ -1163,36 +1172,41 @@ public class AdminProfile extends javax.swing.JFrame {
 		try {
 			Database permission = new Database();
 			if (permission.readPermissions(name)) {
-				System.out.println(
-						"this should be a dialog but now switching permissions to User");
+				JOptionPane.showMessageDialog(null,
+						"Permissions set to basic.",
+						"Success!",
+						JOptionPane.INFORMATION_MESSAGE);
 				permission.writePermissions(name, 0);
 			} else {
-				System.out.println("GOD MODE!@!@!@");
+				JOptionPane.showMessageDialog(null,
+						"Permissions set to administrator.",
+						"Success!",
+						JOptionPane.INFORMATION_MESSAGE);
 				permission.writePermissions(name, 1);
 			}
 		} catch (IOException e) {
 
 		} catch (NullPointerException e) {
-			JOptionPane.showMessageDialog(null, 
+			JOptionPane.showMessageDialog(null,
 					"No user has been selected.",
 					"Oops!",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
-	@SuppressWarnings("serial")
 	private void adminUserDataActionPerformed(java.awt.event.ActionEvent evt) {
 		name = jList2.getSelectedValue();
 		try {
 			Database info = new Database();
-			String[] strings = new String[info.readEvent(name).size() + 5];
+			String[] strings = new String[info.readEvent(name).size() + 6];
 			strings[0] = name;
 			strings[1] = "Email: " + info.readEmail(name);
 			strings[2] = "DOB: " + info.readBirth(name);
-			strings[3] = "Events Attended:";
-			strings[4] = "";
+			strings[3] = "Phone:" + info.readPhone(name);
+			strings[4] = "Events Attended:";
+			strings[5] = "";
 			int index = 0;
-			for (int i = 5; i < strings.length; i++) {
+			for (int i = 6; i < strings.length; i++) {
 				strings[i] = info.readEvent(name).get(index);
 				index++;
 			}

@@ -32,12 +32,15 @@ public class UserProfile extends javax.swing.JFrame {
 		userHeader = new javax.swing.JLabel();
 		userEmail = new javax.swing.JLabel();
 		userEmailField = new javax.swing.JTextField();
+		userPhoneField = new javax.swing.JTextField();
+		userUpdatePhone = new javax.swing.JButton();
 		userUpdate = new javax.swing.JButton();
 		userFeedback = new javax.swing.JButton();
 		jScrollPane1 = new javax.swing.JScrollPane();
 		jList1 = new javax.swing.JList<>();
 		userRSVP = new javax.swing.JButton();
 		jLabel1 = new javax.swing.JLabel();
+		jLabel2 = new javax.swing.JLabel();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,13 +49,19 @@ public class UserProfile extends javax.swing.JFrame {
 
 		userEmail.setText("New E-Mail");
 
-		userUpdate.setText("Update");
+		userUpdate.setText("Update E-Mail");
 
 		userFeedback.setText("Send Feedback");
 
 		userUpdate.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				userUpdateActionPerformed(evt);
+			}
+		});
+
+		userUpdatePhone.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				userUpdatePhoneActionPerformed(evt);
 			}
 		});
 
@@ -100,61 +109,59 @@ public class UserProfile extends javax.swing.JFrame {
 
 		jLabel1.setText("Event List");
 
+		jLabel2.setText("New Phone");
+
+		userUpdatePhone.setText("Update Phone");
+
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(
 				getContentPane());
 		getContentPane().setLayout(layout);
 		layout.setHorizontalGroup(layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout
-						.createSequentialGroup().addGap(169, 169, 169)
-						.addComponent(userHeader).addContainerGap()).addGroup(
-								javax.swing.GroupLayout.Alignment.TRAILING,
-								layout.createSequentialGroup().addContainerGap()
-										.addComponent(userFeedback)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+						.createSequentialGroup().addContainerGap().addGroup(
+								layout.createParallelGroup(
+										javax.swing.GroupLayout.Alignment.LEADING,
+										false).addComponent(userEmailField,
 												javax.swing.GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE).addComponent(
-														userRSVP,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														110,
-														javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addGap(36, 36, 36)).addGroup(layout
-												.createSequentialGroup()
-												.addContainerGap().addGroup(
-														layout.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING)
-																.addComponent(
-																		userEmailField,
-																		javax.swing.GroupLayout.PREFERRED_SIZE,
-																		162,
-																		javax.swing.GroupLayout.PREFERRED_SIZE)
-																.addComponent(
-																		userUpdate)
-																.addComponent(
-																		userEmail))
-												.addPreferredGap(
-														javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-														40, Short.MAX_VALUE)
-												.addGroup(layout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING)
-														.addGroup(
-																javax.swing.GroupLayout.Alignment.TRAILING,
-																layout.createSequentialGroup()
-																		.addComponent(
-																				jLabel1)
-																		.addGap(69,
-																				69,
-																				69))
-														.addGroup(
-																javax.swing.GroupLayout.Alignment.TRAILING,
-																layout.createSequentialGroup()
-																		.addComponent(
-																				jScrollPane1,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				174,
-																				javax.swing.GroupLayout.PREFERRED_SIZE)
-																		.addContainerGap()))));
+												162, Short.MAX_VALUE)
+										.addComponent(userEmail).addComponent(
+												jLabel2).addComponent(
+														userUpdatePhone)
+										.addComponent(userPhoneField)
+										.addComponent(userUpdate))
+						.addPreferredGap(
+								javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+								40, Short.MAX_VALUE).addGroup(layout
+										.createParallelGroup(
+												javax.swing.GroupLayout.Alignment.LEADING)
+										.addGroup(
+												javax.swing.GroupLayout.Alignment.TRAILING,
+												layout.createSequentialGroup()
+														.addComponent(jLabel1)
+														.addGap(69, 69, 69))
+										.addGroup(
+												javax.swing.GroupLayout.Alignment.TRAILING,
+												layout.createSequentialGroup()
+														.addComponent(
+																jScrollPane1,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																174,
+																javax.swing.GroupLayout.PREFERRED_SIZE)
+														.addContainerGap())))
+				.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout
+						.createSequentialGroup().addContainerGap().addComponent(
+								userFeedback).addPreferredGap(
+										javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+										javax.swing.GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE).addComponent(userRSVP,
+												javax.swing.GroupLayout.PREFERRED_SIZE,
+												110,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addGap(43, 43, 43)).addGroup(layout
+								.createSequentialGroup().addGap(169, 169, 169)
+								.addComponent(userHeader).addContainerGap(
+										javax.swing.GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)));
 		layout.setVerticalGroup(layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout
 						.createSequentialGroup().addContainerGap().addComponent(
@@ -170,20 +177,28 @@ public class UserProfile extends javax.swing.JFrame {
 												javax.swing.GroupLayout.PREFERRED_SIZE,
 												javax.swing.GroupLayout.DEFAULT_SIZE,
 												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addGap(18, 18, 18).addComponent(
-												userUpdate)).addComponent(
-														jScrollPane1,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.PREFERRED_SIZE))
-						.addPreferredGap(
-								javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-								24, Short.MAX_VALUE).addGroup(layout
-										.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.BASELINE)
-										.addComponent(userFeedback)
-										.addComponent(userRSVP)).addGap(46, 46,
-												46)));
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(userUpdate)
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+												32, Short.MAX_VALUE)
+										.addComponent(jLabel2).addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+										.addComponent(userPhoneField,
+												javax.swing.GroupLayout.PREFERRED_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+										.addComponent(userUpdatePhone).addGap(
+												15, 15, 15)).addComponent(
+														jScrollPane1)).addGap(
+																18, 18, 18)
+						.addGroup(layout.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(userRSVP).addComponent(
+										userFeedback)).addContainerGap()));
 
 		pack();
 	}// </editor-fold>//GEN-END:initComponents
@@ -193,6 +208,20 @@ public class UserProfile extends javax.swing.JFrame {
 		try {
 			Database update = new Database();
 			update.writeEmail(name, email);
+			setVisible(false);
+			new CheckinScreen().setVisible(true);
+		} catch (IOException e) {
+
+		}
+
+	}
+
+	private void userUpdatePhoneActionPerformed(
+			java.awt.event.ActionEvent evt) {
+		String phone = userPhoneField.getText();
+		try {
+			Database update = new Database();
+			update.writePhone(name, phone);
 			setVisible(false);
 			new CheckinScreen().setVisible(true);
 		} catch (IOException e) {
@@ -280,6 +309,9 @@ public class UserProfile extends javax.swing.JFrame {
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
 	private javax.swing.JLabel jLabel1;
+	private javax.swing.JLabel jLabel2;
+	private javax.swing.JTextField userPhoneField;
+	private javax.swing.JButton userUpdatePhone;
 	private javax.swing.JList<String> jList1;
 	private javax.swing.JScrollPane jScrollPane1;
 	private javax.swing.JLabel userEmail;

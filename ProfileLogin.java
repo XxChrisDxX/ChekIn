@@ -1,7 +1,5 @@
 import java.io.IOException;
 
-import javax.swing.JOptionPane;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -123,10 +121,7 @@ public class ProfileLogin extends javax.swing.JFrame {
     	        	setVisible(false);
     			}
     		else
-    			JOptionPane.showMessageDialog(null,
-    					"The email does not match the user.",
-    					"Invalid",
-    					JOptionPane.INFORMATION_MESSAGE);
+    			System.out.println("invalid");
     	}
     	catch(IOException e){
     		
