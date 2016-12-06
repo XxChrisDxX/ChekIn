@@ -26,7 +26,8 @@ public class AdminProfile extends javax.swing.JFrame {
 	private String uHost, uEmail, uPassword;
 	private static String event = "";
 
-	public AdminProfile() {
+	public AdminProfile(String name) {
+		this.name = name;
 		initComponents();
 	}
 
@@ -1393,7 +1394,7 @@ public class AdminProfile extends javax.swing.JFrame {
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new AdminProfile().setVisible(true);
+				new AdminProfile("").setVisible(true);
 			}
 		});
 	}
