@@ -308,10 +308,6 @@ public class UserProfile extends javax.swing.JFrame {
                 new SwingEmailSender(uHost, uEmail, uPassword).setVisible(true);
             }
         });
-		//new SwingEmailSender(uHost, uEmail, uPassword).setVisible(true);
-		
-		
-        setVisible(false);
 
 	}
 

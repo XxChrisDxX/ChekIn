@@ -631,10 +631,6 @@ public class AdminProfile extends javax.swing.JFrame {
                 new SwingEmailSender(uHost, uEmail, uPassword).setVisible(true);
             }
         });
-		//new SwingEmailSender(uHost, uEmail, uPassword).setVisible(true);
-		
-		
-        setVisible(false);
 
 	}
 
@@ -683,10 +679,6 @@ public class AdminProfile extends javax.swing.JFrame {
                 new SwingEmailSender(uHost, uEmail, uPassword).setVisible(true);
             }
         });
-		//new SwingEmailSender(uHost, uEmail, uPassword).setVisible(true);
-		
-		
-        setVisible(false);
 
 	}
 
