@@ -3,7 +3,6 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -245,19 +244,17 @@ public class UserProfile extends javax.swing.JFrame {
 
 		try {
 			Database valid = new Database();
-	        
-	        if(valid.attendEvent(name, event)){
-	        	valid.writeEvent(name, event);
-	        	JOptionPane.showMessageDialog(null,
-	    				"You are now RSVP'd for this event: " + event,
-	    				"Success!",
-	    				JOptionPane.INFORMATION_MESSAGE);
-	        } else {
-	        	JOptionPane.showMessageDialog(null,
-	    				"You already RSVP'd for this event.",
-	    				"Notice",
-	    				JOptionPane.INFORMATION_MESSAGE);
-	        }
+
+			if (valid.attendEvent(name, event)) {
+				valid.writeEvent(name, event);
+				JOptionPane.showMessageDialog(null,
+						"You are now RSVP'd for this event: " + event,
+						"Success!", JOptionPane.INFORMATION_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(null,
+						"You already RSVP'd for this event.", "Notice",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
 		} catch (IOException e) {
 
 		}
@@ -275,39 +272,35 @@ public class UserProfile extends javax.swing.JFrame {
 		// LIST OF EVENTS IN USER PROFILE....DOABLE YES....
 		try {
 			Database valid = new Database();
-	        
+
 			uEmail = valid.readEmail(name);
 			String line = uEmail;
 			int length = line.length();
 			int beg = 0;
-			
-			for(int i = 0; i<length;i++){
-				if(line.charAt(i)=='@'){
+
+			for (int i = 0; i < length; i++) {
+				if (line.charAt(i) == '@') {
 					beg = i;
 				}
-				if(beg != 0){
-					uHost = "smtp." + line.substring(beg+1, length);
+				if (beg != 0) {
+					uHost = "smtp." + line.substring(beg + 1, length);
 					break;
 				}
 			}
 		} catch (IOException e) {
 
 		}
-		uPassword = JOptionPane.showInputDialog("Enter password for email address.");				
-		try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-         
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-            	File properties = new File("smtp.properties");
-            	properties.delete();
-                new SwingEmailSender(uHost, uEmail, uPassword).setVisible(true);
-            }
-        });
+		uPassword = JOptionPane.showInputDialog(
+				"Enter password for email address.");
+
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				File properties = new File("smtp.properties");
+				properties.delete();
+				new SwingEmailSender(uHost, uEmail, uPassword).setVisible(true);
+			}
+		});
 
 	}
 
@@ -316,37 +309,6 @@ public class UserProfile extends javax.swing.JFrame {
 	 *            the command line arguments
 	 */
 	public static void main(String args[]) {
-		/* Set the Nimbus look and feel */
-		// <editor-fold defaultstate="collapsed" desc=" Look and feel setting
-		// code (optional) ">
-		/*
-		 * If Nimbus (introduced in Java SE 6) is not available, stay with the
-		 * default look and feel. For details see
-		 * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.
-		 * html
-		 */
-		try {
-			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager
-					.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					javax.swing.UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(UserProfile.class.getName()).log(
-					java.util.logging.Level.SEVERE, null, ex);
-		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(UserProfile.class.getName()).log(
-					java.util.logging.Level.SEVERE, null, ex);
-		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(UserProfile.class.getName()).log(
-					java.util.logging.Level.SEVERE, null, ex);
-		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(UserProfile.class.getName()).log(
-					java.util.logging.Level.SEVERE, null, ex);
-		}
-		// </editor-fold>
 
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable() {

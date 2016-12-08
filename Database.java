@@ -66,7 +66,8 @@ public class Database {
 		boolean successful = temp.renameTo(main);
 	}
 
-	public void deleteEventList(String event) throws IOException, NullPointerException{
+	public void deleteEventList(String event) throws IOException,
+			NullPointerException {
 		StringBuilder add = new StringBuilder(150);
 		File main = new File("database.dat");
 		File temp = new File("temp.dat");
@@ -111,31 +112,33 @@ public class Database {
 		input.close();
 		return false;
 	}
-	
-	public boolean attendEvent(String user, String attend) throws IOException{
+
+	public boolean attendEvent(String user, String attend) throws IOException {
 		FileReader file = new FileReader("database.dat");
 		BufferedReader input = new BufferedReader(file);
 		String name = "";
 		String event = "";
 		int istart = 0;
-		while((line = input.readLine()) != null){
+		while ((line = input.readLine()) != null) {
 			int length = line.length();
-			for(int i = 0; i<length;i++){
-				if(line.charAt(i)==':'){
-					name = line.substring(0,i);
+			for (int i = 0; i < length; i++) {
+				if (line.charAt(i) == ':') {
+					name = line.substring(0, i);
 					istart = i;
-					
+
 					int beg = 0;
 					int end = 0;
-					if(user.equalsIgnoreCase(name)){
-						event = line.substring(line.indexOf('['), line.indexOf(']'));
-						if(user.equalsIgnoreCase(name) && event.contains(attend)){
+					if (user.equalsIgnoreCase(name)) {
+						event = line.substring(line.indexOf('['), line.indexOf(
+								']'));
+						if (user.equalsIgnoreCase(name) && event.contains(
+								attend)) {
 							file.close();
 							input.close();
 							return false;
 						}
-					
-					}else
+
+					} else
 						break;
 				}
 			}
@@ -163,7 +166,8 @@ public class Database {
 		return users;
 	}
 
-	public ArrayList<String> readEventStats() throws IOException, DateTimeParseException {
+	public ArrayList<String> readEventStats() throws IOException,
+			DateTimeParseException {
 		FileReader file = new FileReader("database.dat");
 		BufferedReader input = new BufferedReader(file);
 		String dob;
@@ -224,8 +228,9 @@ public class Database {
 				events.add(eventname);
 				index = line.indexOf(',', index + 1);
 			}
-			if(limit !=-1 || index != -1)
-			events.add(line.substring(limit + 1, line.indexOf(' ', limit + 1)));
+			if (limit != -1 || index != -1)
+				events.add(line.substring(limit + 1, line.indexOf(' ', limit
+						+ 1)));
 		}
 		file.close();
 		input.close();
@@ -260,7 +265,8 @@ public class Database {
 		return events;
 	}
 
-	public boolean readPermissions(String data) throws IOException, NullPointerException {
+	public boolean readPermissions(String data) throws IOException,
+			NullPointerException {
 		FileReader file = new FileReader("database.dat");
 		BufferedReader input = new BufferedReader(file);
 		String name = "";
@@ -342,7 +348,7 @@ public class Database {
 				add.append(phone);
 				add.append(line.substring(line.indexOf(':', tempIndex + 1), line
 						.length()));
-				out.write(add.toString());
+				out.write(add.toString() + "\n");
 			} else
 				out.write(line + "\n");
 
@@ -353,7 +359,8 @@ public class Database {
 		boolean successful = temp.renameTo(main);
 	}
 
-	public String readEmail(String data) throws IOException, NullPointerException {
+	public String readEmail(String data) throws IOException,
+			NullPointerException {
 		FileReader file = new FileReader("database.dat");
 		BufferedReader input = new BufferedReader(file);
 		String name = "";
@@ -461,7 +468,7 @@ public class Database {
 				add.append(email);
 				add.append(line.substring(line.indexOf(':', length + 1), line
 						.length()));
-				out.write(add.toString());
+				out.write(add.toString() + "\n");
 			} else
 				out.write(line + "\n");
 
