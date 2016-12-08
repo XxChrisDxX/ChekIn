@@ -14,7 +14,6 @@ import java.util.TreeSet;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 
 /**
  *
@@ -133,30 +132,34 @@ public class AdminProfile extends javax.swing.JFrame {
 														adminUserSearchField))
 								.addComponent(adminUserNameList,
 										javax.swing.GroupLayout.PREFERRED_SIZE,
-										241,
+										220,
 										javax.swing.GroupLayout.PREFERRED_SIZE))
 						.addPreferredGap(
 								javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 						.addGroup(adminUserPanelLayout.createParallelGroup(
 								javax.swing.GroupLayout.Alignment.LEADING,
 								false).addComponent(adminUserPermissions,
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										Short.MAX_VALUE).addComponent(
-												adminUserData,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE).addComponent(
-														adminUserInvite,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														Short.MAX_VALUE)
+										javax.swing.GroupLayout.Alignment.LEADING,
+										javax.swing.GroupLayout.PREFERRED_SIZE,
+										156,
+										javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addComponent(adminUserData,
+										javax.swing.GroupLayout.Alignment.TRAILING,
+										javax.swing.GroupLayout.PREFERRED_SIZE,
+										156,
+										javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addComponent(adminUserInvite,
+										javax.swing.GroupLayout.Alignment.TRAILING,
+										javax.swing.GroupLayout.PREFERRED_SIZE,
+										156,
+										javax.swing.GroupLayout.PREFERRED_SIZE)
 								.addComponent(adminUserNotify,
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										Short.MAX_VALUE)).addContainerGap(
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)));
+										javax.swing.GroupLayout.Alignment.TRAILING,
+										javax.swing.GroupLayout.PREFERRED_SIZE,
+										156,
+										javax.swing.GroupLayout.PREFERRED_SIZE))
+						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
+								Short.MAX_VALUE)));
 		adminUserPanelLayout.setVerticalGroup(adminUserPanelLayout
 				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addGroup(adminUserPanelLayout.createSequentialGroup()
@@ -259,27 +262,30 @@ public class AdminProfile extends javax.swing.JFrame {
 												.createParallelGroup(
 														javax.swing.GroupLayout.Alignment.LEADING)
 												.addComponent(adminEventDelete,
-														javax.swing.GroupLayout.Alignment.TRAILING,
+														javax.swing.GroupLayout.Alignment.LEADING,
 														javax.swing.GroupLayout.PREFERRED_SIZE,
-														135,
+														160,
 														javax.swing.GroupLayout.PREFERRED_SIZE)
 												.addComponent(adminEventEdit,
-														javax.swing.GroupLayout.Alignment.TRAILING,
+														javax.swing.GroupLayout.Alignment.LEADING,
 														javax.swing.GroupLayout.PREFERRED_SIZE,
-														135,
+														160,
 														javax.swing.GroupLayout.PREFERRED_SIZE)
 												.addComponent(adminEventStart,
-														javax.swing.GroupLayout.Alignment.TRAILING,
+														javax.swing.GroupLayout.Alignment.LEADING,
 														javax.swing.GroupLayout.PREFERRED_SIZE,
-														135,
+														160,
 														javax.swing.GroupLayout.PREFERRED_SIZE)
 												.addComponent(adminEventEnd,
-														javax.swing.GroupLayout.Alignment.TRAILING,
+														javax.swing.GroupLayout.Alignment.LEADING,
 														javax.swing.GroupLayout.PREFERRED_SIZE,
-														135,
+														160,
 														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addComponent(
-														adminEventCreate)))
+												.addComponent(adminEventCreate,
+														javax.swing.GroupLayout.Alignment.LEADING,
+														javax.swing.GroupLayout.PREFERRED_SIZE,
+														160,
+														javax.swing.GroupLayout.PREFERRED_SIZE)))
 								.addGroup(adminEventPanelLayout
 										.createSequentialGroup().addComponent(
 												adminEventHeader).addGap(0, 0,
@@ -492,10 +498,9 @@ public class AdminProfile extends javax.swing.JFrame {
 																						Short.MAX_VALUE))
 																.addComponent(
 																		adminStatAttendance,
-																		javax.swing.GroupLayout.Alignment.TRAILING,
-																		javax.swing.GroupLayout.PREFERRED_SIZE,
+																		javax.swing.GroupLayout.DEFAULT_SIZE,
 																		156,
-																		javax.swing.GroupLayout.PREFERRED_SIZE))
+																		Short.MAX_VALUE))
 										.addContainerGap()))));
 		adminStatPanelLayout.setVerticalGroup(adminStatPanelLayout
 				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -598,39 +603,35 @@ public class AdminProfile extends javax.swing.JFrame {
 
 		try {
 			Database valid = new Database();
-	        
+
 			uEmail = valid.readEmail(name);
 			String line = uEmail;
 			int length = line.length();
 			int beg = 0;
-			
-			for(int i = 0; i<length;i++){
-				if(line.charAt(i)=='@'){
+
+			for (int i = 0; i < length; i++) {
+				if (line.charAt(i) == '@') {
 					beg = i;
 				}
-				if(beg != 0){
-					uHost = "smtp." + line.substring(beg+1, length);
+				if (beg != 0) {
+					uHost = "smtp." + line.substring(beg + 1, length);
 					break;
 				}
 			}
 		} catch (IOException e) {
 
 		}
-		uPassword = JOptionPane.showInputDialog("Enter password for email address.");				
-		try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-         
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-            	File properties = new File("smtp.properties");
-            	properties.delete();
-                new SwingEmailSender(uHost, uEmail, uPassword).setVisible(true);
-            }
-        });
+		uPassword = JOptionPane.showInputDialog(
+				"Enter password for email address.");
+
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				File properties = new File("smtp.properties");
+				properties.delete();
+				new SwingEmailSender(uHost, uEmail, uPassword).setVisible(true);
+			}
+		});
 
 	}
 
@@ -646,39 +647,35 @@ public class AdminProfile extends javax.swing.JFrame {
 
 		try {
 			Database valid = new Database();
-	        
+
 			uEmail = valid.readEmail(name);
 			String line = uEmail;
 			int length = line.length();
 			int beg = 0;
-			
-			for(int i = 0; i<length;i++){
-				if(line.charAt(i)=='@'){
+
+			for (int i = 0; i < length; i++) {
+				if (line.charAt(i) == '@') {
 					beg = i;
 				}
-				if(beg != 0){
-					uHost = "smtp." + line.substring(beg+1, length);
+				if (beg != 0) {
+					uHost = "smtp." + line.substring(beg + 1, length);
 					break;
 				}
 			}
 		} catch (IOException e) {
 
 		}
-		uPassword = JOptionPane.showInputDialog("Enter password for email address.");				
-		try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-         
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-            	File properties = new File("smtp.properties");
-            	properties.delete();
-                new SwingEmailSender(uHost, uEmail, uPassword).setVisible(true);
-            }
-        });
+		uPassword = JOptionPane.showInputDialog(
+				"Enter password for email address.");
+
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				File properties = new File("smtp.properties");
+				properties.delete();
+				new SwingEmailSender(uHost, uEmail, uPassword).setVisible(true);
+			}
+		});
 
 	}
 
@@ -974,10 +971,9 @@ public class AdminProfile extends javax.swing.JFrame {
 		} catch (DateTimeParseException e) {
 			JOptionPane.showMessageDialog(null,
 					"The date and time data recorded "
-					+ "is in the incorrect format. Please "
-					+ "refer to database.dat and check "
-					+ "recorded dates.",
-					"Oops!",
+							+ "is in the incorrect format. Please "
+							+ "refer to database.dat and check "
+							+ "recorded dates.", "Oops!",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
@@ -1076,10 +1072,9 @@ public class AdminProfile extends javax.swing.JFrame {
 		} catch (DateTimeParseException e) {
 			JOptionPane.showMessageDialog(null,
 					"The date and time data recorded "
-					+ "is in the incorrect format. Please "
-					+ "refer to database.dat and check "
-					+ "recorded dates.",
-					"Oops!",
+							+ "is in the incorrect format. Please "
+							+ "refer to database.dat and check "
+							+ "recorded dates.", "Oops!",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
@@ -1158,10 +1153,8 @@ public class AdminProfile extends javax.swing.JFrame {
 		} catch (IOException e) {
 
 		} catch (NullPointerException e) {
-			JOptionPane.showMessageDialog(null,
-					"No event has been selected.",
-					"Oops!",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "No event has been selected.",
+					"Oops!", JOptionPane.ERROR_MESSAGE);
 		}
 
 	}
@@ -1171,11 +1164,11 @@ public class AdminProfile extends javax.swing.JFrame {
 		String eventType;
 		String eventDate = null;
 		eventType = JOptionPane.showInputDialog("Enter Event Type.");
-		if(eventType!=null){
+		if (eventType != null) {
 			eventDate = JOptionPane.showInputDialog("Enter Event Date.\n"
 					+ "YYYY/MM/DD");
 		}
-		if(eventType!=null && eventDate!=null){
+		if (eventType != null && eventDate != null) {
 			try {
 				Database event = new Database();
 				event.deleteEventList(jList1.getSelectedValue());
@@ -1188,13 +1181,13 @@ public class AdminProfile extends javax.swing.JFrame {
 					public int getSize() {
 						return strings.length;
 					}
-	
+
 					public String getElementAt(int i) {
 						return strings[i];
 					}
 				});
 			} catch (IOException e) {
-	
+
 			}
 		}
 	}
@@ -1250,25 +1243,20 @@ public class AdminProfile extends javax.swing.JFrame {
 		try {
 			Database permission = new Database();
 			if (permission.readPermissions(name)) {
-				JOptionPane.showMessageDialog(null,
-						"Permissions set to basic.",
-						"Success!",
-						JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Permissions set to basic.",
+						"Success!", JOptionPane.INFORMATION_MESSAGE);
 				permission.writePermissions(name, 0);
 			} else {
 				JOptionPane.showMessageDialog(null,
-						"Permissions set to administrator.",
-						"Success!",
+						"Permissions set to administrator.", "Success!",
 						JOptionPane.INFORMATION_MESSAGE);
 				permission.writePermissions(name, 1);
 			}
 		} catch (IOException e) {
 
 		} catch (NullPointerException e) {
-			JOptionPane.showMessageDialog(null,
-					"No user has been selected.",
-					"Oops!",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "No user has been selected.",
+					"Oops!", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -1301,10 +1289,8 @@ public class AdminProfile extends javax.swing.JFrame {
 		} catch (IOException e) {
 
 		} catch (NullPointerException e) {
-			JOptionPane.showMessageDialog(null,
-					"No user has been selected.",
-					"Oops!",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "No user has been selected.",
+					"Oops!", JOptionPane.ERROR_MESSAGE);
 		}
 
 	}
@@ -1352,37 +1338,6 @@ public class AdminProfile extends javax.swing.JFrame {
 	 *            the command line arguments
 	 */
 	public static void main(String args[]) {
-		/* Set the Nimbus look and feel */
-		// <editor-fold defaultstate="collapsed" desc=" Look and feel setting
-		// code (optional) ">
-		/*
-		 * If Nimbus (introduced in Java SE 6) is not available, stay with the
-		 * default look and feel. For details see
-		 * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.
-		 * html
-		 */
-		try {
-			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager
-					.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					javax.swing.UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(AdminProfile.class.getName())
-					.log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(AdminProfile.class.getName())
-					.log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(AdminProfile.class.getName())
-					.log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(AdminProfile.class.getName())
-					.log(java.util.logging.Level.SEVERE, null, ex);
-		}
-		// </editor-fold>
 
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable() {
